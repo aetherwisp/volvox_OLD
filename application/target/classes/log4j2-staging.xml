@@ -8,7 +8,7 @@
     <!-- ================== -->
     <Properties>
         <Property name="logging.pattern">%d{DEFAULT} %5p [%t] (%C:%L) - %m%n</Property>
-        <Property name="logging.root">$${sys:com.github.aetherwisp.volvox.logging.root:-$${sys:java.io.tmpdir}}</Property>
+        <Property name="logging.root">$${sys:com.github.aetherwisp.volvox.logging.root:-./target/logs}</Property>
         <Property name="logging.name">$${sys:com.github.aetherwisp.volvox.logging.name:-volvox}</Property>
     </Properties>
 
