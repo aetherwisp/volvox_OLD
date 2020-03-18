@@ -1,0 +1,24 @@
+# ----------------------------------------
+# Project specific properties
+# ----------------------------------------
+aetherwisp:
+  volvox:
+    application:
+      webjars:
+        bootstrap: 4.4.1-1
+        jquery: 3.4.1
+
+# ----------------------------------------
+# Common Application properties
+# ----------------------------------------
+server:
+   port: 9876
+   servlet:
+      context-path: /volvox
+
+spring:
+  mvc:
+    favicon:
+      enabled: true
+  profiles:
+    active: product

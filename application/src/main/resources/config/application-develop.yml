@@ -1,0 +1,25 @@
+# ----------------------------------------
+# Project specific properties
+# ----------------------------------------
+aetherwisp:
+  volvox:
+    application:
+      version: 1.0.0
+
+# ----------------------------------------
+# Common Application properties
+# ----------------------------------------
+logging:
+   config: classpath:log4j2-develop.xml
+
+spring:
+  resources:
+    cache:
+      cachecontrol:
+        cache-private: true
+        must-revalidate: true
+        no-store: true
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+
