@@ -1,19 +1,42 @@
 package com.github.aetherwisp.volvox;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Objects;
 
-@SpringBootApplication
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Volvox {
+
     public static class Profiles {
         public static final String DEVELOP = "develop";
         public static final String STAGING = "staging";
         public static final String PRODUCT = "product";
     }
 
-    public static void main(String[] _args) {
-        System.err.println(System.getProperty("java.io.tmpdir"));
-        SpringApplication.run(Volvox.class, _args);
+    //======================================================================
+    // Fields
+    private final String version;
+
+    private final String adminlte;
+
+    //======================================================================
+    // Constructors
+    @Autowired
+    public Volvox(@Value("${aetherwisp.volvox.application.version}") final String _version,
+            @Value("${aetherwisp.volvox.application.version}") final String _adminlte) {
+        this.version = Objects.requireNonNull(_version);
+        this.adminlte = Objects.requireNonNull(_adminlte);
     }
 
+    //======================================================================
+    // Getters
+    public String getVersion() {
+        return this.version;
+    }
+
+    public String getAdminlte() {
+        return this.adminlte;
+    }
 }

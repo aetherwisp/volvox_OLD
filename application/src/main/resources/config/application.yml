@@ -4,9 +4,7 @@
 aetherwisp:
   volvox:
     application:
-      webjars:
-        bootstrap: 4.4.1-1
-        jquery: 3.4.1
+      adminlte: 3.0.2
 
 # ----------------------------------------
 # Common Application properties
