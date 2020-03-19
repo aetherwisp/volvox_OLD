@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 public class Volvox {
 
     public static class Profiles {
-        public static final String DEVELOP = "develop";
-        public static final String STAGING = "staging";
-        public static final String PRODUCT = "product";
+        public static final String DEV = "dev";
+        public static final String STG = "stg";
+        public static final String PRD = "prd";
     }
 
     //======================================================================
@@ -25,7 +25,7 @@ public class Volvox {
     // Constructors
     @Autowired
     public Volvox(@Value("${aetherwisp.volvox.application.version}") final String _version,
-            @Value("${aetherwisp.volvox.application.version}") final String _adminlte) {
+            @Value("${aetherwisp.volvox.application.adminlte}") final String _adminlte) {
         this.version = Objects.requireNonNull(_version);
         this.adminlte = Objects.requireNonNull(_adminlte);
     }

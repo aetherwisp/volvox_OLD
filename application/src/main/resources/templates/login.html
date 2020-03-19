@@ -1,60 +1,99 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ja">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Volvox</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png}"/>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/{version}/css/bootstrap.min.css(version=${@webjars.bootstrap})}" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" th:href="@{/adminlte/{version}/plugins/fontawesome-free/css/all.min.css(version=${@volvox.adminlte})}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" th:href="@{/adminlte/{version}/plugins/icheck-bootstrap/icheck-bootstrap.min.css(version=${@volvox.adminlte})}">
+    <!-- Theme style -->
+    <link rel="stylesheet" th:href="@{/adminlte/{version}/dist/css/adminlte.min.css(version=${@volvox.adminlte})}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 
-<body>
-    <script th:src="@{/webjars/jquery/{version}/jquery.min.js(version=${@webjars.jquery})}"></script>
-    <script th:src="@{/webjars/bootstrap/{version}/js/bootstrap.min.js(version=${@webjars.bootstrap})}"></script>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 min-vh-100 d-flex flex-column justify-content-center">
-                <div class="row">
-                    <div class="col-lg-6 col-md-8 mx-auto">
-
-                        <!-- form card login -->
-                        <div class="card rounded shadow shadow-sm">
-                            <div class="card-header text-center">
-                                <h3 class="mb-0">Login</h3>
-                            </div>
-                            <div class="card-body">
-                                <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST">
-                                    <div class="form-group">
-                                        <label for="uname1">Username</label>
-                                        <input type="text" class="form-control form-control-lg rounded-0" name="uname1" id="uname1" required="">
-                                        <div class="invalid-feedback">Oops, you missed this one.</div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Password</label>
-                                        <input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">
-                                        <div class="invalid-feedback">Enter your password too!</div>
-                                    </div>
-                                    <div>
-                                        <label class="custom-control custom-checkbox">
-                                            <input id="remember" name="remember" type="checkbox" class="custom-control-input">
-                                            <label class="custom-control-label" for="remember">Remember me on this computer</label>
-                                        </label>
-                                    </div>
-                                    <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
-                                </form>
-                            </div>
-                            <!--/card-block-->
-                        </div>
-                        <!-- /form card login -->
-                    </div>
-                </div>
-                <!--/row-->
-            </div>
-            <!--/col-->
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
         </div>
-        <!--/row-->
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+                <form action="../../index3.html" method="post">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Remember Me</label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center mb-3">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    </a>
+                </div>
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="register.html" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
     </div>
-    <!--/container-->
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script th:src="@{/adminlte/{version}/plugins/jquery/jquery.min.js(version=${@volvox.adminlte})}"></script>
+    <!-- Bootstrap 4 -->
+    <script th:src="@{/adminlte/{version}/plugins/bootstrap/js/bootstrap.bundle.min.js(version=${@volvox.adminlte})}"></script>
+    <!-- AdminLTE App -->
+    <script th:src="@{/adminlte/{version}/dist/js/adminlte.min.js(version=${@volvox.adminlte})}"></script>
+
 </body>
+
 </html>
