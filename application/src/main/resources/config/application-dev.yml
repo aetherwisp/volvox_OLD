@@ -4,18 +4,22 @@
 aetherwisp:
   volvox:
     application:
-      version: ${project.version}+${build.number}
+      version: 1.0.0
 
 # ----------------------------------------
 # Common Application properties
 # ----------------------------------------
 logging:
-   config: classpath:log4j2-product.xml
+   config: classpath:log4j2-dev.xml
 
 spring:
-  main:
-    banner-mode: off
   resources:
     cache:
       cachecontrol:
-        max-age: 31536000
+        cache-private: true
+        must-revalidate: true
+        no-store: true
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+

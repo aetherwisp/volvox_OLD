@@ -10,11 +10,9 @@ aetherwisp:
 # Common Application properties
 # ----------------------------------------
 logging:
-   config: classpath:log4j2-staging.xml
+   config: classpath:log4j2-stg.xml
 
 spring:
-  main:
-    banner-mode: off
   resources:
     cache:
       cachecontrol:
