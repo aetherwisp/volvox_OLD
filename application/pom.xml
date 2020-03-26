@@ -95,6 +95,15 @@
             </exclusions>
         </dependency>
 
+        <!-- ====== -->
+        <!-- JavaFX -->
+        <!-- ====== -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+
         <!-- ============= -->
         <!-- AOP Libraries -->
         <!-- ============= -->

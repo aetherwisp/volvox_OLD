@@ -11,6 +11,8 @@
     <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png}"/>
 
     <!-- Font Awesome -->
+    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" th:href="@{/adminlte/{version}/plugins/fontawesome-free/webfonts/fa-brands-400.woff2(version=${@volvox.adminlte})}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" th:href="@{/adminlte/{version}/plugins/fontawesome-free/webfonts/fa-solid-900.woff2(version=${@volvox.adminlte})}">
     <link rel="stylesheet" th:href="@{/adminlte/{version}/plugins/fontawesome-free/css/all.min.css(version=${@volvox.adminlte})}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">

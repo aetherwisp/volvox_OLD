@@ -10,7 +10,7 @@ aetherwisp:
 # Common Application properties
 # ----------------------------------------
 server:
-   port: 9876
+   port: 0
    servlet:
       context-path: /volvox
 
