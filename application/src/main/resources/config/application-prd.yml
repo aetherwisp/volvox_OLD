@@ -11,7 +11,8 @@ aetherwisp:
 # ----------------------------------------
 logging:
    config: classpath:log4j2-prd.xml
-
+server:
+   port: 0
 spring:
   main:
     banner-mode: off

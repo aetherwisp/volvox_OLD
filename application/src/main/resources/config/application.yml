@@ -4,16 +4,16 @@
 aetherwisp:
   volvox:
     application:
-      adminlte: 3.0.2
+      scripts:
+        adminlte: 3.0.2
+        webfontloader: 1.6.28
 
 # ----------------------------------------
 # Common Application properties
 # ----------------------------------------
 server:
-   port: 0
    servlet:
       context-path: /volvox
-
 spring:
   mvc:
     favicon:

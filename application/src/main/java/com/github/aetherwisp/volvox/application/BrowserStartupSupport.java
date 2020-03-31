@@ -2,31 +2,44 @@ package com.github.aetherwisp.volvox.application;
 
 import static java.lang.invoke.MethodHandles.*;
 import static org.apache.logging.log4j.LogManager.*;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
-// @Component
-public class BrowserStartupSupport extends Application implements ApplicationListener<WebServerInitializedEvent> {
+@Component
+public class BrowserStartupSupport implements ApplicationListener<WebServerInitializedEvent> {
     //======================================================================
     // Fields
     private static final Logger LOG = getLogger(lookup().lookupClass());
-
-    private Stage primaryStage;
 
     //======================================================================
     // Methods
     @Override
     public void onApplicationEvent(WebServerInitializedEvent _event) {
-        LOG.info("ポート番号：{}", Integer.valueOf(_event.getWebServer()
-                .getPort()));
-    }
+        //======================================================================
+        // ポート番号を取得
+        final Integer port = Integer.valueOf(_event.getWebServer()
+                .getPort());
 
-    @Override
-    public void start(Stage _primaryStage) throws Exception {
-        LOG.info("JavaFX start");
-        this.primaryStage = _primaryStage;
+        //======================================================================
+        // コンテキストパスを取得
+        final String contextPath = _event.getApplicationContext()
+                .getBean(Environment.class)
+                .getProperty("server.servlet.context-path");
+
+        //======================================================================
+        // ブラウザを自動起動
+        try {
+            final Desktop desktop = Desktop.getDesktop();
+            desktop.browse(URI.create(String.format("http://localhost:%d/%s", port, contextPath)));
+        } catch (IOException e) {
+            // ブラウザの自動起動に失敗した場合はユーザに手動でブラウザを起動してもらう
+            LOG.warn(e.getMessage());
+        }
     }
 }

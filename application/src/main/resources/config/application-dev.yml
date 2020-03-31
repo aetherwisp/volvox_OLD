@@ -11,7 +11,8 @@ aetherwisp:
 # ----------------------------------------
 logging:
    config: classpath:log4j2-dev.xml
-
+server:
+   port: 9876
 spring:
   resources:
     cache:

@@ -7,14 +7,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
-@Component
+// @Component
 public class JavaFxApplication extends Application implements ApplicationListener<WebServerInitializedEvent> {
     //======================================================================
     // Fields
@@ -57,7 +56,11 @@ public class JavaFxApplication extends Application implements ApplicationListene
         engine.setOnError(event -> LOG.error(event));
         engine.load("http://localhost:" + port + "/volvox");
 
-        _primaryStage.setScene(new Scene(view, 1024, 768));
+        final Scene scene = new Scene(view, 1024, 768);
+        scene.getStylesheets()
+                .add("/volvox/adminlte/3.0.2/plugins/fontawesome-free/css/all.min.css");
+
+        _primaryStage.setScene(scene);
         _primaryStage.setTitle("Volvox");
         _primaryStage.setMinWidth(1024d);
         _primaryStage.setMinHeight(768d);
