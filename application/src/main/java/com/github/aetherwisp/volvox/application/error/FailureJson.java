@@ -2,9 +2,7 @@ package com.github.aetherwisp.volvox.application.error;
 
 import java.net.URI;
 import java.util.Objects;
-
 import org.springframework.lang.NonNull;
-
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
@@ -24,8 +22,8 @@ public class FailureJson {
      * 問題の種類を識別する URI 参照です。
      * 
      * <p>
-     * 問題の種類について人間が読めるドキュメントを提示する際に設定します。(マニュアルやトラブルシューティングガイドなど)
-     * このメンバが存在しない場合、クライアントは about:blank と解釈します。
+     * 問題の種類について人間が読めるドキュメントを提示する際に設定します。(マニュアルやトラブルシューティングガイドなど) このメンバが存在しない場合、クライアントは about:blank
+     * と解釈します。
      */
     private URI type;
 
