@@ -42,6 +42,12 @@
     <!-- ============================= -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>[3.0.0,4.0.0)</version>
+            </dependency>
+
             <!-- ============== -->
             <!-- Test Libraries -->
             <!-- ============== -->
