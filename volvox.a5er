@@ -1,0 +1,315 @@
+﻿# A5:ER FORMAT:13
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright (C)2007 m.matsubara
+# A5:SQL Mk-2 Copyright (C)1997 m.matsubara
+#  http://www.wind.sannet.ne.jp/m_matsu/developer/a5m2/
+
+[Manager]
+ProjectName=volvox
+Author=
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",7,"A1Landscape",$FFFFFF
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=7
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=ＭＳ ゴシック
+FontSize=12
+PaperSize=A4Landscape
+HeaderLeft=
+HeaderCenter=
+HeaderRight=
+FooterLeft=
+FooterCenter=
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=5
+RDBMSTypeName=MySQL
+CommonField="作成日時","CREATED_AT","TIMESTAMP","NOT NULL",,"","",$FFFFFFFF
+CommonField="作成者","CREATED_BY","INTEGER","NOT NULL",,"","",$FFFFFFFF
+CommonField="更新日時","MODIFIED_AT","TIMESTAMP","NOT NULL",,"","",$FFFFFFFF
+CommonField="更新者","MODIFIED_BY","INTEGER","NOT NULL",,"","",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+ShowTag=1
+ShowCommonAttributes=1
+
+[Entity]
+PName=ROLE_PERMISSIONS
+LName=ロール権限
+Comment=
+TableOption=
+Page=Main
+Left=4200
+Top=950
+Field="ロール ID","ROLE_ID","INTEGER","NOT NULL",0,"","",$000028FF,""
+Field="権限 ID","PERMISSION_ID","INTEGER","NOT NULL",1,"","",$000028FF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428111659
+Position="Main",4200,950
+ZOrder=5
+
+[Entity]
+PName=USER_ROLES
+LName=ユーザロール
+Comment=
+TableOption=
+Page=Main
+Left=3000
+Top=400
+Field="ユーザ ID","USER_ID","INTEGER","NOT NULL",0,"","",$000028FF,""
+Field="ロール ID","ROLE_ID","INTEGER","NOT NULL",1,"","",$000028FF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428111122
+Position="Main",3000,400
+ZOrder=6
+
+[Relation]
+Entity1=ROLE
+Entity2=ROLE_PERMISSIONS
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=ROLE_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4668,5332,4430,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=467
+Bar2=533
+Bar3=443
+TermPos1=R
+TermPos2=R
+ZOrder=7
+
+[Relation]
+Entity1=PERMISSION
+Entity2=ROLE_PERMISSIONS
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=PERMISSION_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4343,7401,4011,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=434
+Bar2=740
+Bar3=401
+TermPos1=R
+TermPos2=R
+ZOrder=8
+
+[Relation]
+Entity1=USER
+Entity2=USER_ROLES
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=USER_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,3996,5428,5994,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=400
+Bar2=543
+Bar3=599
+TermPos1=R
+TermPos2=R
+ZOrder=9
+
+[Entity]
+PName=USER_PERMISSIONS
+LName=ユーザ権限
+Comment=
+TableOption=
+Page=Main
+Left=3000
+Top=1500
+Field="ユーザ ID","USER_ID","INTEGER","NOT NULL",0,"","",$000028FF,""
+Field="権限 ID","PERMISSION_ID","INTEGER","NOT NULL",1,"","",$000028FF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428114409
+Position="Main",3000,1500
+ZOrder=10
+
+[Relation]
+Entity1=ROLE
+Entity2=USER_ROLES
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=ROLE_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,3109,5580,3109,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=311
+Bar2=558
+Bar3=311
+TermPos1=R
+TermPos2=R
+ZOrder=11
+
+[Relation]
+Entity1=USER
+Entity2=USER_PERMISSIONS
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=USER_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",3,5120,4346,1080,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=3
+Bar1=512
+Bar2=435
+Bar3=108
+TermPos1=R
+TermPos2=R
+ZOrder=12
+
+[Relation]
+Entity1=PERMISSION
+Entity2=USER_PERMISSIONS
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=PERMISSION_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,2062,7938,3702,R,R
+Dependence=1
+Caption=
+PName=
+LineMode=0
+Bar1=206
+Bar2=794
+Bar3=370
+TermPos1=R
+TermPos2=R
+ZOrder=13
+
+[Entity]
+PName=USER
+LName=ユーザ
+Comment=
+TableOption=
+Page=MAIN
+Left=1500
+Top=400
+Field="ユーザ ID","ID","INTEGER","NOT NULL",0,"","ユーザの識別子",$000028FF,""
+Field="ユーザ名","NAME","VARCHAR(255)","NOT NULL",,"","ユーザの名称",$FFFFFFFF,""
+Field="ロック済み","LOCKED","BOOLEAN","NOT NULL",,"","TRUE：ロック中、FALSE：ロックされていない",$FFFFFFFF,""
+Field="有効期限","EXPIRED_AT","DATETIME","NOT NULL",,"","このユーザの有効期限",$FFFFFFFF,""
+Field="有効","ENABLED","BOOLEAN","NOT NULL",,"","TRUE：有効、FALSE：無効",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428164025
+Position="MAIN",1500,400
+ZOrder=0
+
+[Entity]
+PName=USER_PASSWORD
+LName=ユーザパスワード
+Comment=
+TableOption=
+Page=MAIN
+Left=200
+Top=1500
+Field="パスワード ID","ID","INTEGER","NOT NULL",0,"","パスワードの識別子",$000028FF,""
+Field="ユーザ ID","USER_ID","INTEGER","NOT NULL",,"","パスワードを所有するユーザの ID",$FFFFFFFF,""
+Field="パスワード","PASSWORD","VARCHAR(255)","NOT NULL",,"","パスワード文字列",$FFFFFFFF,""
+Field="有効期限","EXPIRED_AT","TIMESTAMP","NOT NULL",,"","パスワードの有効期限",$FFFFFFFF,""
+Field="有効","ENABLED","BOOLEAN","NOT NULL",,"FALSE","TRUE：有効、FALSE：無効",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428164049
+Position="MAIN",200,1500
+ZOrder=1
+
+[Relation]
+Entity1=USER
+Entity2=USER_PASSWORD
+RelationType1=2
+RelationType2=3
+Fields1=ID
+Fields2=USER_ID
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",4,2241,7134,1407,R,R
+Dependence=1
+Caption=
+PName=
+ModifiedDateTime=20200422103213
+LineMode=4
+Bar1=224
+Bar2=713
+Bar3=141
+TermPos1=R
+TermPos2=R
+ZOrder=2
+
+[Entity]
+PName=ROLE
+LName=ロール
+Comment=
+TableOption=
+Page=MAIN
+Left=4200
+Top=400
+Field="ロール ID","ID","INTEGER","NOT NULL",0,"","",$000028FF,""
+Field="ロール名","NAME","VARCHAR(255)","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428163634
+Position="MAIN",4200,400
+ZOrder=3
+
+[Entity]
+PName=PERMISSION
+LName=権限
+Comment=
+TableOption=
+Page=MAIN
+Left=4200
+Top=1550
+Field="権限 ID","ID","INTEGER","NOT NULL",0,"","",$000028FF,""
+Field="権限名","NAME","VARCHAR(255)","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20200428163648
+Position="MAIN",4200,1550
+ZOrder=4
