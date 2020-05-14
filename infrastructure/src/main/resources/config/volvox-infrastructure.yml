@@ -5,25 +5,3 @@ spring:
   jdbc:
     template:
       fetch-size: 1000
-
-# ----------------------------------------
-# volvox-infrastructure プロパティ
-# ----------------------------------------
-aetherwisp:
-  volvox:
-    infrastructure:
-      datasource:
-        # ----------------------------------------
-        # DEFAULT DATASOURCE
-        # ----------------------------------------
-        default:
-          name: default
-          driver: org.h2.Driver
-          url: jdbc:h2:file:~/volvox
-          username: sa
-          password: ${H2_PASSWORD}
-          hikari:
-            auto-commit: false
-            transaction-isolation: READ_COMMITTED
-            maximum-pool-size: 10
-            register-mbeans: false

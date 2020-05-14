@@ -8,3 +8,26 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+
+# ----------------------------------------
+# volvox-infrastructure プロパティ
+# ----------------------------------------
+aetherwisp:
+  volvox:
+    infrastructure:
+      datasource:
+        # ----------------------------------------
+        # DEFAULT DATASOURCE
+        # ----------------------------------------
+        default:
+          name: default
+          driver: org.h2.Driver
+          url: jdbc:h2:file:~/.h2/volvox
+          username: sa
+          password: ${H2_PASSWORD}
+          hikari:
+            auto-commit: false
+            transaction-isolation: READ_COMMITTED
+            maximum-pool-size: 10
+            register-mbeans: false
+        
