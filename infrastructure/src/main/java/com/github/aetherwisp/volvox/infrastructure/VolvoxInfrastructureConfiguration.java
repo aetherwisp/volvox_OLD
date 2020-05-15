@@ -22,16 +22,16 @@ public class VolvoxInfrastructureConfiguration {
     }
 
     @Configuration
-    @PropertySource(value = {"classpath:config/volvox-infrastructure.yml", "classpath:config/volvox-infrastructure-" + STG + ".yml"},
-            ignoreResourceNotFound = true)
+    @PropertySource(factory = YamlPropertySourceFactory.class,
+            value = {"classpath:config/volvox-infrastructure.yml", "classpath:config/volvox-infrastructure-" + STG + ".yml"}, ignoreResourceNotFound = true)
     @Profile(STG)
     static class StagingConfiguration {
         // do nothing.
     }
 
     @Configuration
-    @PropertySource(value = {"classpath:config/volvox-infrastructure.yml", "classpath:config/volvox-infrastructure-" + PRD + ".yml"},
-            ignoreResourceNotFound = true)
+    @PropertySource(factory = YamlPropertySourceFactory.class,
+            value = {"classpath:config/volvox-infrastructure.yml", "classpath:config/volvox-infrastructure-" + PRD + ".yml"}, ignoreResourceNotFound = true)
     @Profile(PRD)
     static class ProductConfiguration {
         // do nothing.
