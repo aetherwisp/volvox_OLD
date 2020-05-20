@@ -20,8 +20,7 @@
     <!-- ================ -->
     <properties>
         <frontend.src.dir>${project.basedir}/src/main/app</frontend.src.dir>
-        <frontend.node.version>v12.16.1</frontend.node.version>
-        <frontend.yarn.version>v1.22.4</frontend.yarn.version>
+        <frontend.node.version>v12.16.3</frontend.node.version>
     </properties>
 
 
@@ -246,27 +245,27 @@
             <!-- ======== -->
             <!-- Frontend -->
             <!-- ======== -->
-<!--
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
                 <version>1.9.1</version>
                 <configuration>
                     <nodeVersion>${frontend.node.version}</nodeVersion>
-                    <yarnVersion>${frontend.yarn.version}</yarnVersion>
                 </configuration>
                 <executions>
                     <execution>
                         <id>install-frontend-tools</id>
                         <goals>
-                            <goal>install-node-and-yarn</goal>
+                            <goal>install-node-and-npm</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                     </execution>
                     <execution>
-                        <id>yarn-install</id>
+                        <id>npm-install</id>
                         <goals>
-                            <goal>yarn</goal>
+                            <goal>npm</goal>
                         </goals>
+                        <phase>generate-resources</phase>
                         <configuration>
                             <arguments>install</arguments>
                         </configuration>
@@ -274,7 +273,7 @@
                     <execution>
                         <id>build-frontend</id>
                         <goals>
-                            <goal>yarn</goal>
+                            <goal>npm</goal>
                         </goals>
                         <phase>prepare-package</phase>
                         <configuration>
@@ -283,6 +282,7 @@
                     </execution>
                 </executions>
             </plugin>
+<!--
 -->
 
             <!-- ========= -->
