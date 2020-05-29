@@ -12,3 +12,5 @@ spring:
       transaction-isolation: TRANSACTION_READ_COMMITTED
       maximum-pool-size: 10
       register-mbeans: false
+  flyway:
+    locations: classpath:/db/migration,classpath:/dev/db/migration

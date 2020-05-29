@@ -41,25 +41,26 @@ public class VolvoxApplication {
     @Component
     @ConfigurationProperties(prefix = VolvoxApplication.PREFIX + ".scripts")
     public static class ScriptVersions {
+        //======================================================================
+        // Constants
         private static final String PREFIX = VolvoxApplication.PREFIX + ".scripts";
 
-        private final String adminlte;
+        //======================================================================
+        // Fields
+        /** Bootstrap のバージョン */
+        private final String bootstrap;
 
-        private final String webfontloader;
-
+        //======================================================================
+        // Constructors
         @Autowired
-        public ScriptVersions(@Value("${" + ScriptVersions.PREFIX + ".adminlte}") final String adminlte,
-                @Value("${" + ScriptVersions.PREFIX + ".webfontloader}") final String webfontloader) {
-            this.adminlte = Objects.requireNonNull(adminlte);
-            this.webfontloader = Objects.requireNonNull(webfontloader);
+        public ScriptVersions(@Value("${" + ScriptVersions.PREFIX + ".bootstrap}") final String _bootstrap) {
+            this.bootstrap = Objects.requireNonNull(_bootstrap);
         }
 
-        public String getAdminlte() {
-            return this.adminlte;
-        }
-
-        public String getWebfontloader() {
-            return this.webfontloader;
+        //======================================================================
+        // Getters
+        public String getBootstrap() {
+            return this.bootstrap;
         }
     }
 }
