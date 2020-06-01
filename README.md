@@ -1,2 +1,2 @@
 # volvox
-Implementation example of Spring Boot using AdminLTE.
+This project provides a skeleton implementation of web application using Spring Boot.
