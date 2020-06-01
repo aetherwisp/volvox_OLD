@@ -63,4 +63,42 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
+    <!-- =============== -->
+    <!-- PLUGINS SECTION -->
+    <!-- =============== -->
+    <plugins>
+        <!-- ================ -->
+        <!-- CREATE DATABASES -->
+        <!-- ================ -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>sql-maven-plugin</artifactId>
+            <version>1.5</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                    <version>${postgresql.version</version>
+                </dependency>
+            </dependencies>
+            <configuration>
+                <driver>org.postgresql.Driver</driver>
+                <username>postgres</username>
+                <password>${DB_PASSWORD}</password><!-- パスワードが異なる場合は変更してください。 -->
+                <autocommit>true</autocommit>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>create-databases</id>
+                    <configuration>
+                        <url>jdbc:postgresql://localhost:5432/postgres</url>
+                        <sqlCommand>
+                            CREATE DATABASE IF NOT EXISTS volvox ENCODING='UTF8';
+                        </sqlCommand>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
 </project>
