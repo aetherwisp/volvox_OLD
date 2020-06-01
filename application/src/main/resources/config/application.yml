@@ -5,9 +5,7 @@ aetherwisp:
   volvox:
     application:
       scripts:
-        adminlte: 3.0.2
         bootstrap: 4.5.0
-        webfontloader: 1.6.28
 
 # ----------------------------------------
 # Common Application properties

@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/volvox
     username: postgres
-    password: ${DB_PASSWORD}
+    password: ${VOLVOX_DATASOURCE_PASSWORD}
     hikari:
       auto-commit: false
       transaction-isolation: TRANSACTION_READ_COMMITTED
