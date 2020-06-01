@@ -77,19 +77,27 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sql-maven-plugin</artifactId>
 				<version>1.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${postgresql.version}</version>
+					</dependency>
+				</dependencies>
 				<configuration>
 					<driver>org.postgresql.Driver</driver>
+					<url>jdbc:postgresql://localhost:5432/postgres</url>
 					<username>postgres</username>
-					<password>${VOLVOX_DATASOURCE_PASSWORD}</password>
+					<password>${env.VOLVOX_DATASOURCE_PASSWORD}</password>
 					<autocommit>true</autocommit>
 				</configuration>
 				<executions>
 					<execution>
-						<id>create-databases</id>
+						<id>create-database-volvox</id>
 						<configuration>
-							<url>jdbc:postgresql://localhost:5432/volvox</url>
+							<onError>continue</onError>
 							<sqlCommand>
-								CREATE DATABASE IF NOT EXISTS volvox ENCODING='UTF8';
+								CREATE DATABASE volvox ENCODING='UTF8';
 							</sqlCommand>
 						</configuration>
 					</execution>
