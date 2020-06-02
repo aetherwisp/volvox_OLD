@@ -102,6 +102,16 @@
             </exclusions>
         </dependency>
 
+        <!-- ==================== -->
+        <!-- WebJar for Bootstrap -->
+        <!-- ==================== -->
+        <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.5.0</version>
+        </dependency>
+
         <!-- ============= -->
         <!-- AOP Libraries -->
         <!-- ============= -->

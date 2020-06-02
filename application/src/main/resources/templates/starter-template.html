@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/bootstrap/{version}/css/bootstrap.min.css(version=${@volvox.scripts.bootstrap})}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/{version}/css/bootstrap.min.css(version=${@volvox.webjars.bootstrap})}">
 
     <title>Hello, world!</title>
 </head>
@@ -17,8 +17,8 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script th:src="@{/bootstrap/{version}/js/jquery.min.js(version=${@volvox.scripts.bootstrap})}"></script>
-    <script th:src="@{/bootstrap/{version}/js/bootstrap.bundle.min.js(version=${@volvox.scripts.bootstrap})}"></script>
+    <script th:src="@{/webjars/jquery/{version}/jquery.min.js(version=${@volvox.webjars.jquery})}"></script>
+    <script th:src="@{/webjars/bootstrap/{version}/js/bootstrap.bundle.min.js(version=${@volvox.webjars.bootstrap})}"></script>
 </body>
 
 </html>

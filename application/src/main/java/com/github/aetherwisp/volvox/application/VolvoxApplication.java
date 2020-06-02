@@ -16,14 +16,14 @@ public class VolvoxApplication {
     // Fields
     private final String version;
 
-    private final ScriptVersions scripts;
+    private final WebJars webjars;
 
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxApplication(@Value("${" + VolvoxApplication.PREFIX + ".version}") final String _version, final ScriptVersions _scripts) {
+    public VolvoxApplication(@Value("${" + VolvoxApplication.PREFIX + ".version}") final String _version, final WebJars _webjars) {
         this.version = Objects.requireNonNull(_version);
-        this.scripts = Objects.requireNonNull(_scripts);
+        this.webjars = Objects.requireNonNull(_webjars);
     }
 
     //======================================================================
@@ -32,35 +32,43 @@ public class VolvoxApplication {
         return this.version;
     }
 
-    public ScriptVersions getScripts() {
-        return this.scripts;
+    public WebJars getWebjars() {
+        return this.webjars;
     }
 
     //======================================================================
     // Classes
     @Component
-    @ConfigurationProperties(prefix = VolvoxApplication.PREFIX + ".scripts")
-    public static class ScriptVersions {
+    @ConfigurationProperties(prefix = VolvoxApplication.PREFIX + ".webjars")
+    public static class WebJars {
         //======================================================================
         // Constants
-        private static final String PREFIX = VolvoxApplication.PREFIX + ".scripts";
+        private static final String PREFIX = VolvoxApplication.PREFIX + ".webjars";
 
         //======================================================================
         // Fields
-        /** Bootstrap のバージョン */
+        /** Bootstrap version. */
         private final String bootstrap;
+
+        /** jQuery version. */
+        private final String jquery;
 
         //======================================================================
         // Constructors
         @Autowired
-        public ScriptVersions(@Value("${" + ScriptVersions.PREFIX + ".bootstrap}") final String _bootstrap) {
+        public WebJars(@Value("${" + WebJars.PREFIX + ".bootstrap}") final String _bootstrap, @Value("${" + WebJars.PREFIX + ".jquery}") final String _jquery) {
             this.bootstrap = Objects.requireNonNull(_bootstrap);
+            this.jquery = Objects.requireNonNull(_jquery);
         }
 
         //======================================================================
         // Getters
         public String getBootstrap() {
             return this.bootstrap;
+        }
+
+        public String getJquery() {
+            return this.jquery;
         }
     }
 }
