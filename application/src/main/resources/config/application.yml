@@ -12,8 +12,10 @@ aetherwisp:
 # Common Application properties
 # ----------------------------------------
 server:
-   servlet:
-      context-path: /volvox
+  compression:
+    enabled: true
+  servlet:
+    context-path: /volvox
 spring:
   mvc:
     favicon:
