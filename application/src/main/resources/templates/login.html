@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Volvox | Log in</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
     <link rel="stylesheet" th:href="@{/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -82,12 +82,14 @@
     </div>
     <!-- /.login-box -->
 
-    <!-- jQuery -->
     <script th:src="@{/webjars/AdminLTE/plugins/jquery/jquery.min.js}"></script>
-    <!-- Bootstrap 4 -->
     <script th:src="@{/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
-    <!-- AdminLTE App -->
     <script th:src="@{/webjars/AdminLTE/dist/js/adminlte.min.js}"></script>
+    <script>
+        $(function () {
+            // jQuery methods go here...
+        });
+    </script>
 </body>
 
 </html>
