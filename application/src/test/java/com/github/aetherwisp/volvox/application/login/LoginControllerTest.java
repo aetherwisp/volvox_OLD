@@ -1,8 +1,10 @@
 package com.github.aetherwisp.volvox.application.login;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.aetherwisp.volvox.test.CommonOperations;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.Operations;
+import com.ninja_squad.dbsetup.destination.DataSourceDestination;
+import com.ninja_squad.dbsetup.operation.Operation;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -39,6 +46,18 @@ public class LoginControllerTest {
     @Nested
     @DisplayName("ログイン画面")
     public class LoginTest {
+        @BeforeEach
+        public void setUp() {
+            //======================================================================
+            // テストデータ登録
+            final LocalDateTime sysdate = LocalDateTime.now();
+            final Operation operation = Operations.sequenceOf(CommonOperations.DELETE_ALL_TABLES, Operations.insertInto("user")
+                    .columns("name", "locked", "expired_at", "enabled", "created_at", "created_by", "updated_at", "updated_by")
+                    .values("テストユーザ", Boolean.FALSE, sysdate.plusDays(1L), Boolean.TRUE, sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                    .build());
+            final DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), operation);
+            dbSetup.launch();
+        }
 
         @Test
         public void test() throws Exception {

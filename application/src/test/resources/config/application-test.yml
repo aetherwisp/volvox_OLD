@@ -15,7 +15,7 @@ logging:
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:~/volvox
+    url: jdbc:h2:mem:volvox;MODE=PostgreSQL;DATABASE_TO_UPPER=false;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
     username: sa
     password: password
     hikari:
@@ -23,6 +23,9 @@ spring:
       transaction-isolation: TRANSACTION_READ_COMMITTED
       maximum-pool-size: 10
       register-mbeans: false
+#  flyway:
+#    schemas: volvox
+#    default-schema: volvox
   h2:
     console:
       enabled: true
