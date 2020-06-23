@@ -14,3 +14,4 @@ spring:
       register-mbeans: false
   flyway:
     locations: classpath:/db/migration,classpath:/dev/db/migration
+    clean-on-validation-error: true
