@@ -1,5 +1,9 @@
 package com.github.aetherwisp.volvox.application.login;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.sql.DataSource;
@@ -11,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -60,8 +65,16 @@ public class LoginControllerTest {
         }
 
         @Test
-        public void test() throws Exception {
+        @DisplayName("初期表示")
+        public void showPage() throws Exception {
             Assertions.assertNotNull(mockMvc);
+            mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
+                    .andExpect(status().isOk())
+                    .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+                    .andExpect(view().name("login"));
+
         }
     }
 }
