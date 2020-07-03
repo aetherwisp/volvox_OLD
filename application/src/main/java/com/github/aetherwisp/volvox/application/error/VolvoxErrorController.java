@@ -2,13 +2,13 @@ package com.github.aetherwisp.volvox.application.error;
 
 import static java.lang.invoke.MethodHandles.*;
 import static org.apache.logging.log4j.LogManager.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.error.ErrorAttributeOptions;
+import org.springframework.boot.web.error.ErrorAttributeOptions.Include;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.MediaType;
@@ -43,7 +43,7 @@ public class VolvoxErrorController implements ErrorController {
     public ModelAndView errorHtml(HttpServletRequest _request, HttpServletResponse _response) {
 
         final WebRequest webRequest = new ServletWebRequest(_request);
-        LOG.debug(this.errorAttributes.getErrorAttributes(webRequest, false));
+        LOG.debug(this.errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.of(Include.BINDING_ERRORS, Include.EXCEPTION)));
         LOG.error(this.errorAttributes.getError(webRequest));
 
         // TODO: View を返すエンドポイントはまだ無いので何もしない
@@ -54,7 +54,7 @@ public class VolvoxErrorController implements ErrorController {
     /**
      * レスポンスの Content-Type が application/json で、 例外が発生するか HTTP ステータスコードが 400 以上のレスポンスをハンドリングします。
      * 
-     * @param _request  HTTP リクエスト
+     * @param _request HTTP リクエスト
      * @param _response HTTP レスポンス
      * @return JSON または null
      */

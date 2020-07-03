@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Component;
 import com.github.aetherwisp.volvox.domain.user.User;
 import com.github.aetherwisp.volvox.domain.user.UserRepository;
 import com.github.aetherwisp.volvox.infrastructure.AbstractJdbcFinder;
 import com.github.aetherwisp.volvox.infrastructure.Queries;
 
+@Component
 public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements UserRepository {
 
     //======================================================================
