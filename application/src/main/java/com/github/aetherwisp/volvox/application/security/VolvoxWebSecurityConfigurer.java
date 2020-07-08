@@ -1,4 +1,4 @@
-package com.github.aetherwisp.volvox.application;
+package com.github.aetherwisp.volvox.application.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +33,7 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authenticated();
 
 
+        _http.formLogin()
     }
 
     //======================================================================

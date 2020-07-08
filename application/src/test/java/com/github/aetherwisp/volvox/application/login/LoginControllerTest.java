@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.sql.DataSource;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -67,7 +66,6 @@ public class LoginControllerTest {
         @Test
         @DisplayName("初期表示")
         public void showPage() throws Exception {
-            Assertions.assertNotNull(mockMvc);
             mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))

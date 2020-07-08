@@ -40,8 +40,11 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
         final String password = (String) _authentication.getCredentials();
 
         //======================================================================
-        // FIXME: ここで認証とロール付与
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        // FIXME: 認証
+
+        //======================================================================
+        // FIXME: 権限付与
+        final Collection<GrantedAuthority> authorities = new ArrayList<>();
 
         return new UsernamePasswordAuthenticationToken(username, password, authorities);
     }

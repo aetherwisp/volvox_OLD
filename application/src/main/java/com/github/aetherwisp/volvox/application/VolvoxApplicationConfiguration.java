@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component("volvox")
-public class VolvoxApplication {
+public class VolvoxApplicationConfiguration {
     //======================================================================
     // Constants
     public static final String PREFIX = "aetherwisp.volvox.application";
@@ -21,7 +21,7 @@ public class VolvoxApplication {
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxApplication(@Value("${" + VolvoxApplication.PREFIX + ".version}") final String _version, final WebJars _webjars) {
+    public VolvoxApplicationConfiguration(@Value("${" + VolvoxApplicationConfiguration.PREFIX + ".version}") final String _version, final WebJars _webjars) {
         this.version = Objects.requireNonNull(_version);
         this.webjars = Objects.requireNonNull(_webjars);
     }
@@ -39,11 +39,11 @@ public class VolvoxApplication {
     //======================================================================
     // Classes
     @Component
-    @ConfigurationProperties(prefix = VolvoxApplication.PREFIX + ".webjars")
+    @ConfigurationProperties(prefix = VolvoxApplicationConfiguration.PREFIX + ".webjars")
     public static class WebJars {
         //======================================================================
         // Constants
-        private static final String PREFIX = VolvoxApplication.PREFIX + ".webjars";
+        private static final String PREFIX = VolvoxApplicationConfiguration.PREFIX + ".webjars";
 
         //======================================================================
         // Fields

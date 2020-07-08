@@ -8,119 +8,106 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.lang.NonNull;
 import com.github.aetherwisp.volvox.domain.user.Password;
 import com.github.aetherwisp.volvox.domain.user.PasswordRepository;
-import com.github.aetherwisp.volvox.domain.user.PasswordRepository.PasswordFinder;
-import com.github.aetherwisp.volvox.domain.user.User;
-import com.github.aetherwisp.volvox.domain.user.UserRepository;
 import com.github.aetherwisp.volvox.infrastructure.AbstractJdbcFinder;
 import com.github.aetherwisp.volvox.infrastructure.Queries;
 
-@Component
-public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements UserRepository {
+public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport implements PasswordRepository {
 
     //======================================================================
     // Fields
     private final ConversionService conversionService;
 
-    private final PasswordRepository passwordRepository;
-
     //======================================================================
     // Constructors
     @Autowired
-    public JdbcUserRepository(final DataSource _dataSource, final ConversionService _conversionService, final PasswordRepository _passwordRepository) {
+    public JdbcPasswordRepository(final DataSource _dataSource, final ConversionService _conversionService) {
         this.setDataSource(Objects.requireNonNull(_dataSource));
         this.conversionService = Objects.requireNonNull(_conversionService);
-        this.passwordRepository = Objects.requireNonNull(_passwordRepository);
     }
 
     //======================================================================
     // Methods
     @Override
-    public UserFinder finder() {
-        return new JdbcUserFinder(this.getNamedParameterJdbcTemplate(), this.conversionService);
+    public PasswordFinder finder() {
+        return new JdbcPasswordFinder(this.getNamedParameterJdbcTemplate(), this.conversionService);
     }
 
     //======================================================================
     // Classes
-    private static class JdbcUserFinder extends AbstractJdbcFinder<User, Integer> implements UserFinder {
+    private static class JdbcPasswordFinder extends AbstractJdbcFinder<Password, Integer> implements PasswordFinder {
         //======================================================================
         // Fields
-        private final PasswordFinder passwordFinder;
         private Integer id;
-        private String name;
+        private Integer userId;
 
         //======================================================================
         // Constructors
-        private JdbcUserFinder(NamedParameterJdbcTemplate _jdbcTemplate, ConversionService _conversionService, PasswordFinder _passwordFinder) {
+        protected JdbcPasswordFinder(NamedParameterJdbcTemplate _jdbcTemplate, ConversionService _conversionService) {
             super(_jdbcTemplate, _conversionService);
-            this.passwordFinder = Objects.requireNonNull(_passwordFinder);
         }
 
         //======================================================================
         // Methods
         @Override
-        public UserFinder filterById(Integer _id) {
+        public Password get(Integer _firstId, Integer... _remainingIds) {
+            return this.getJdbcTemplate()
+                    .query(Queries.query()
+                            .append("SELECT id,")
+                            .append("       user_id,")
+                            .append("       password,")
+                            .append("       expired_at,")
+                            .append("       enabled")
+                            .append("  FROM user_password")
+                            .append(" WHERE id = :id")
+                            .toString(),
+                            Queries.parameters()
+                                    .addValue("id", _firstId),
+                            this.getRowMapper(Password.PasswordBuilder.class))
+                    .stream()
+                    .map(builder -> builder.build())
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        @Override
+        public List<Password> find() {
+            final boolean byId = (null != this.id);
+            final boolean byUserId = (null != this.userId);
+
+            return this.getJdbcTemplate()
+                    .query(Queries.query()
+                            .append("SELECT id,")
+                            .append("       user_id,")
+                            .append("       password,")
+                            .append("       expired_at,")
+                            .append("       enabled")
+                            .append("  FROM user_password")
+                            .append(" WHERE TRUE")
+                            .append("   AND id = :id", byId)
+                            .append("   AND user_id = :userId", byUserId)
+                            .toString(),
+                            Queries.parameters()
+                                    .addValue("id", this.id, byId)
+                                    .addValue("userId", this.userId, byUserId),
+                            this.getRowMapper(Password.PasswordBuilder.class))
+                    .stream()
+                    .map(builder -> builder.build())
+                    .collect(Collectors.toList());
+        }
+
+        @Override
+        public PasswordFinder filterById(@NonNull Integer _id) {
             this.id = Objects.requireNonNull(_id);
             return this;
         }
 
         @Override
-        public UserFinder filterByName(String _name) {
-            this.name = Objects.requireNonNull(_name);
+        public PasswordFinder filterByUserId(@NonNull Integer _userId) {
+            this.userId = Objects.requireNonNull(_userId);
             return this;
-        }
-
-        @Override
-        public User get(Integer _firstId, Integer... _remainingIds) {
-            final List<Password> passwords = this.passwordFinder.filterByUserId(_firstId)
-                    .find();
-
-            final User user = this.getJdbcTemplate()
-                    .query(Queries.query()
-                            .append("SELECT id,")
-                            .append("       name,")
-                            .append("       locked,")
-                            .append("       expired_at,")
-                            .append("       enabled")
-                            .append("  FROM user")
-                            .append(" WHERE id = :id")
-                            .toString(),
-                            Queries.parameters()
-                                    .addValue("id", _firstId),
-                            this.getRowMapper(User.UserBuilder.class))
-                    .stream()
-                    .map(builder -> builder.build())
-                    .findFirst()
-                    .orElse(null);
-
-        }
-
-        @Override
-        public List<User> find() {
-            final boolean byId = (null != this.id);
-            final boolean byName = (null != this.name);
-            return this.getJdbcTemplate()
-                    .query(Queries.query()
-                            .append("SELECT id,")
-                            .append("       name,")
-                            .append("       locked,")
-                            .append("       expired_at,")
-                            .append("       enabled,")
-                            .append("  FROM user")
-                            .append(" WHERE TRUE")
-                            .append("   AND id = :id", byId)
-                            .append("   AND name = :name", byName)
-                            .toString(),
-                            Queries.parameters()
-                                    .addValue("id", this.id, byId)
-                                    .addValue("name", this.name, byName),
-                            this.getRowMapper(User.UserBuilder.class))
-                    .stream()
-                    .map(builder -> builder.build())
-                    .collect(Collectors.toList());
-
         }
 
     }
