@@ -42,6 +42,7 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
         // Fields
         private Integer id;
         private Integer userId;
+        private Boolean enabled;
 
         //======================================================================
         // Constructors
@@ -76,6 +77,7 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
         public List<Password> find() {
             final boolean byId = (null != this.id);
             final boolean byUserId = (null != this.userId);
+            final boolean byEnabled = (null != this.enabled);
 
             return this.getJdbcTemplate()
                     .query(Queries.query()
@@ -88,10 +90,13 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
                             .append(" WHERE TRUE")
                             .append("   AND id = :id", byId)
                             .append("   AND user_id = :userId", byUserId)
+                            .append("   AND enabled = :enabled", byEnabled)
+                            .append(" ORDER BY id DESC")
                             .toString(),
                             Queries.parameters()
                                     .addValue("id", this.id, byId)
-                                    .addValue("userId", this.userId, byUserId),
+                                    .addValue("userId", this.userId, byUserId)
+                                    .addValue("enabled", this.enabled, byEnabled),
                             this.getRowMapper(Password.PasswordBuilder.class))
                     .stream()
                     .map(builder -> builder.build())
@@ -110,5 +115,10 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
             return this;
         }
 
+        @Override
+        public PasswordFinder filterByEnabled(boolean _enabled) {
+            this.enabled = Boolean.valueOf(_enabled);
+            return this;
+        }
     }
 }

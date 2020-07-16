@@ -3,8 +3,48 @@ package com.github.aetherwisp.volvox.domain.user;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import com.github.aetherwisp.volvox.domain.Builder;
+import com.github.aetherwisp.volvox.domain.Entity.Name;
 
 public class Password {
+    public static enum Property implements Name {
+        ID("id"),
+        USER_ID("userId", "user_id", "user-id"),
+        PASSWORD("password"),
+        EXPIRED_AT("expiredAt", "expired_at", "expired-at"),
+        ENABLED("enabled");
+
+
+        private final String camelCase;
+        private final String snakeCase;
+        private final String kebabCase;
+
+        private Property(String _camelCase) {
+            this.camelCase = _camelCase;
+            this.snakeCase = _camelCase;
+            this.kebabCase = _camelCase;
+        }
+
+        private Property(String _camelCase, String _snakeCase, String _kebabCase) {
+            this.camelCase = _camelCase;
+            this.snakeCase = _snakeCase;
+            this.kebabCase = _kebabCase;
+        }
+
+        @Override
+        public String camelCase() {
+            return this.camelCase;
+        }
+
+        @Override
+        public String snakeCase() {
+            return this.snakeCase;
+        }
+
+        @Override
+        public String kebabCase() {
+            return this.kebabCase;
+        }
+    }
 
     //======================================================================
     // Fields

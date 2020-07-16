@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.github.aetherwisp.volvox.domain.Builder;
 import com.github.aetherwisp.volvox.domain.Entity;
+import com.github.aetherwisp.volvox.domain.environment.Environments;
 
 public final class User implements Entity<User>, UserDetails {
     private static final long serialVersionUID = 4128472505610227444L;
@@ -28,6 +29,8 @@ public final class User implements Entity<User>, UserDetails {
     /** {@code true} if this user is valid, {@code false} otherwise. */
     private final boolean enabled;
 
+    private final Password password;
+
     //======================================================================
     // Constructors
     private User(final UserBuilder _builder) {
@@ -37,6 +40,7 @@ public final class User implements Entity<User>, UserDetails {
         this.locked = builder.locked;
         this.expiredAt = Objects.requireNonNull(builder.expiredAt);
         this.enabled = builder.enabled;
+        this.password = Objects.requireNonNull(builder.password);
     }
 
     //======================================================================
@@ -76,14 +80,12 @@ public final class User implements Entity<User>, UserDetails {
 
     @Override
     public String getPassword() {
-        // FIXME: 未実装
-        return null;
+        return this.password.getPassword();
     }
 
     @Override
     public String getUsername() {
-        // FIXME: 未実装
-        return null;
+        return this.name;
     }
 
     @Override
@@ -98,10 +100,13 @@ public final class User implements Entity<User>, UserDetails {
         return false;
     }
 
+    /**
+     * @return ユーザーの資格情報（パスワード）の有効期限が切れているなら true、そうでないなら false
+     */
     @Override
     public boolean isCredentialsNonExpired() {
-        // FIXME: 未実装
-        return false;
+        return this.password.getExpiredAt()
+                .isBefore(Environments.currentLocalDateTime());
     }
 
     //======================================================================
@@ -112,6 +117,7 @@ public final class User implements Entity<User>, UserDetails {
         private boolean locked;
         private LocalDateTime expiredAt;
         private boolean enabled;
+        private Password password;
 
         @Override
         public User build() {
@@ -167,5 +173,9 @@ public final class User implements Entity<User>, UserDetails {
             return this;
         }
 
+        public UserBuilder setPassword(Password _password) {
+            this.password = _password;
+            return this;
+        }
     }
 }

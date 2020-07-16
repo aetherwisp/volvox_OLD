@@ -39,7 +39,7 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
     // Methods
     @Override
     public UserFinder finder() {
-        return new JdbcUserFinder(this.getNamedParameterJdbcTemplate(), this.conversionService);
+        return new JdbcUserFinder(this.getNamedParameterJdbcTemplate(), this.conversionService, this.passwordRepository.finder());
     }
 
     //======================================================================
@@ -74,27 +74,35 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
 
         @Override
         public User get(Integer _firstId, Integer... _remainingIds) {
-            final List<Password> passwords = this.passwordFinder.filterByUserId(_firstId)
-                    .find();
-
-            final User user = this.getJdbcTemplate()
-                    .query(Queries.query()
-                            .append("SELECT id,")
-                            .append("       name,")
-                            .append("       locked,")
-                            .append("       expired_at,")
-                            .append("       enabled")
-                            .append("  FROM user")
-                            .append(" WHERE id = :id")
-                            .toString(),
-                            Queries.parameters()
-                                    .addValue("id", _firstId),
-                            this.getRowMapper(User.UserBuilder.class))
+            final Password password = this.passwordFinder.filterByUserId(_firstId)
+                    .filterByEnabled(true)
+                    .find()
                     .stream()
-                    .map(builder -> builder.build())
                     .findFirst()
-                    .orElse(null);
+                    .get();
 
+            if (null == password) {
+                return null;
+            } else {
+                return this.getJdbcTemplate()
+                        .query(Queries.query()
+                                .append("SELECT id,")
+                                .append("       name,")
+                                .append("       locked,")
+                                .append("       expired_at,")
+                                .append("       enabled")
+                                .append("  FROM user")
+                                .append(" WHERE id = :id")
+                                .toString(),
+                                Queries.parameters()
+                                        .addValue("id", _firstId),
+                                this.getRowMapper(User.UserBuilder.class))
+                        .stream()
+                        .map(builder -> builder.setPassword(password))
+                        .map(builder -> builder.build())
+                        .findFirst()
+                        .orElse(null);
+            }
         }
 
         @Override

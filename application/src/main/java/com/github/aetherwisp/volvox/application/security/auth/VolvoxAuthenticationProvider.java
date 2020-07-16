@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+import com.github.aetherwisp.volvox.domain.user.User;
 import com.github.aetherwisp.volvox.domain.user.UserRepository;
 
 /**
@@ -41,6 +42,12 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
 
         //======================================================================
         // FIXME: 認証
+        final User user = this.userRepository.finder()
+                .filterByName(username)
+                .find()
+                .stream()
+                .findFirst()
+                .orElse(null);
 
         //======================================================================
         // FIXME: 権限付与
