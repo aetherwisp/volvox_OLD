@@ -10,7 +10,7 @@ public final class Environments {
         throw new UnsupportedOperationException();
     }
 
-    private static AtomicReference<EnvironmentService> ref;
+    private static AtomicReference<EnvironmentService> ref = new AtomicReference<>();
 
     public static void initOnceOnly(EnvironmentService _environmentService) {
         ref.compareAndSet(null, Objects.requireNonNull(_environmentService));

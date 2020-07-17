@@ -72,10 +72,12 @@ public final class Queries {
          * 
          * @param _paramName the name of the parameter
          * @param _value the value of the parameter
+         * @param _sqlType the SQL type of the parameter
          * @return a reference to this parameter source, so it's possible to chain several calls together
+         * @see {@link java.sql.Types}
          */
-        public QueryParameters addValue(String _paramName, @Nullable Object _value) {
-            return this.addValue(_paramName, _value, true);
+        public QueryParameters addValue(String _paramName, @Nullable Object _value, int _sqlType) {
+            return this.addValue(_paramName, _value, _sqlType, true);
         }
 
         /**
@@ -83,14 +85,18 @@ public final class Queries {
          * 
          * @param _paramName the name of the parameter
          * @param _value the value of the parameter
+         * @param _sqlType the SQL type of the parameter
          * @param _use {@code true} if the parameter is added, {@code false} otherwise
          * @return a reference to this parameter source, so it's possible to chain several calls together
+         * @see {@link java.sql.Types}
          */
-        public QueryParameters addValue(String _paramName, @Nullable Object _value, boolean _use) {
+        public QueryParameters addValue(String _paramName, @Nullable Object _value, int _sqlType, boolean _use) {
             if (_use) {
                 this.values.put(Objects.requireNonNull(_paramName, "Parameter name must not be null"), _value);
                 if (_value instanceof SqlParameterValue) {
                     this.registerSqlType(_paramName, ((SqlParameterValue) _value).getSqlType());
+                } else {
+                    this.registerSqlType(_paramName, _sqlType);
                 }
             }
             return this;

@@ -1,5 +1,6 @@
 package com.github.aetherwisp.volvox.infrastructure.user;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -91,11 +92,12 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                                 .append("       locked,")
                                 .append("       expired_at,")
                                 .append("       enabled")
-                                .append("  FROM user")
+                                .append("  FROM \"user\"")
                                 .append(" WHERE id = :id")
-                                .toString(),
+                                .toString()
+                                .replaceAll(" +", " "),
                                 Queries.parameters()
-                                        .addValue("id", _firstId),
+                                        .addValue("id", _firstId, Types.INTEGER),
                                 this.getRowMapper(User.UserBuilder.class))
                         .stream()
                         .map(builder -> builder.setPassword(password))
@@ -115,15 +117,16 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                             .append("       name,")
                             .append("       locked,")
                             .append("       expired_at,")
-                            .append("       enabled,")
-                            .append("  FROM user")
+                            .append("       enabled")
+                            .append("  FROM \"user\"")
                             .append(" WHERE TRUE")
                             .append("   AND id = :id", byId)
                             .append("   AND name = :name", byName)
-                            .toString(),
+                            .toString()
+                            .replaceAll(" +", " "),
                             Queries.parameters()
-                                    .addValue("id", this.id, byId)
-                                    .addValue("name", this.name, byName),
+                                    .addValue("id", this.id, Types.INTEGER, byId)
+                                    .addValue("name", this.name, Types.VARCHAR, byName),
                             this.getRowMapper(User.UserBuilder.class))
                     .stream()
                     .map(builder -> builder.build())

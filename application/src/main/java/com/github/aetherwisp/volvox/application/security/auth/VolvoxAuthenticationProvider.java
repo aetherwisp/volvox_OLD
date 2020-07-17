@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.github.aetherwisp.volvox.domain.user.User;
 import com.github.aetherwisp.volvox.domain.user.UserRepository;
@@ -23,12 +24,14 @@ import com.github.aetherwisp.volvox.domain.user.UserRepository;
 public class VolvoxAuthenticationProvider implements AuthenticationProvider {
     //======================================================================
     // Fields
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     //======================================================================
     // Constructors
     @Autowired
-    private VolvoxAuthenticationProvider(final UserRepository _userRepository) {
+    public VolvoxAuthenticationProvider(final PasswordEncoder _passwordEncoder, final UserRepository _userRepository) {
+        this.passwordEncoder = Objects.requireNonNull(_passwordEncoder);
         this.userRepository = Objects.requireNonNull(_userRepository);
     }
 

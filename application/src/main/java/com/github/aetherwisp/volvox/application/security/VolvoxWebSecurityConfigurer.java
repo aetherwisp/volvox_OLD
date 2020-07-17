@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationProvider;
+import com.github.aetherwisp.volvox.domain.user.UserRepository;
 
 /**
  * By adding {@code @EnableWebSecurity} we get Spring Security and MVC integration support.
@@ -21,11 +23,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     //======================================================================
     // Fields
-    private final AuthenticationProvider authenticationProvider;
+    private final UserRepository userRepository;
 
     @Autowired
-    private VolvoxWebSecurityConfigurer(final AuthenticationProvider _authenticationProvider) {
-        this.authenticationProvider = Objects.requireNonNull(_authenticationProvider);
+    public VolvoxWebSecurityConfigurer(final UserRepository _userRepository) {
+        this.userRepository = Objects.requireNonNull(_userRepository);
     }
 
     //======================================================================
@@ -57,11 +59,16 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(this.authenticationProvider);
+        auth.authenticationProvider(this.authenticationProvider());
     }
 
     //======================================================================
     // Components
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new VolvoxAuthenticationProvider(this.passwordEncoder(), this.userRepository);
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
