@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import org.springframework.jdbc.core.SqlParameterValue;
 import org.springframework.jdbc.core.namedparam.AbstractSqlParameterSource;
 import org.springframework.lang.Nullable;
@@ -52,7 +53,9 @@ public final class Queries {
 
         @Override
         public String toString() {
-            return this.builder.toString();
+            return Optional.ofNullable(this.builder.toString())
+                    .orElse("")
+                    .replaceAll(" +", " ");
         }
     }
 

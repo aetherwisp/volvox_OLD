@@ -1,7 +1,10 @@
 package com.github.aetherwisp.volvox.domain.user;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +34,8 @@ public final class User implements Entity<User>, UserDetails {
 
     private final Password password;
 
+    private List<Permission> permissions;
+
     //======================================================================
     // Constructors
     private User(final UserBuilder _builder) {
@@ -41,6 +46,7 @@ public final class User implements Entity<User>, UserDetails {
         this.expiredAt = Objects.requireNonNull(builder.expiredAt);
         this.enabled = builder.enabled;
         this.password = Objects.requireNonNull(builder.password);
+        this.permissions = Collections.unmodifiableList(new ArrayList<>(builder.permissions));
     }
 
     //======================================================================
@@ -74,8 +80,7 @@ public final class User implements Entity<User>, UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // FIXME: 未実装
-        return null;
+        return this.permissions;
     }
 
     @Override
@@ -118,6 +123,7 @@ public final class User implements Entity<User>, UserDetails {
         private LocalDateTime expiredAt;
         private boolean enabled;
         private Password password;
+        private final List<Permission> permissions = new ArrayList<>();
 
         @Override
         public User build() {
@@ -144,6 +150,14 @@ public final class User implements Entity<User>, UserDetails {
 
         public boolean isEnabled() {
             return this.enabled;
+        }
+
+        public Password getPassword() {
+            return this.password;
+        }
+
+        public List<Permission> getPermissions() {
+            return this.permissions;
         }
 
         //======================================================================
@@ -175,6 +189,14 @@ public final class User implements Entity<User>, UserDetails {
 
         public UserBuilder setPassword(Password _password) {
             this.password = _password;
+            return this;
+        }
+
+        public UserBuilder setPermissions(List<Permission> _permissions) {
+            this.permissions.clear();
+            if (null != _permissions) {
+                this.permissions.addAll(_permissions);
+            }
             return this;
         }
     }

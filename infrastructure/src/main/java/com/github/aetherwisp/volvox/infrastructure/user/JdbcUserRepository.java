@@ -1,6 +1,7 @@
 package com.github.aetherwisp.volvox.infrastructure.user;
 
 import java.sql.Types;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -13,6 +14,11 @@ import org.springframework.stereotype.Component;
 import com.github.aetherwisp.volvox.domain.user.Password;
 import com.github.aetherwisp.volvox.domain.user.PasswordRepository;
 import com.github.aetherwisp.volvox.domain.user.PasswordRepository.PasswordFinder;
+import com.github.aetherwisp.volvox.domain.user.Permission;
+import com.github.aetherwisp.volvox.domain.user.PermissionRepository;
+import com.github.aetherwisp.volvox.domain.user.PermissionRepository.PermissionFinder;
+import com.github.aetherwisp.volvox.domain.user.RoleRepository;
+import com.github.aetherwisp.volvox.domain.user.RoleRepository.RoleFinder;
 import com.github.aetherwisp.volvox.domain.user.User;
 import com.github.aetherwisp.volvox.domain.user.UserRepository;
 import com.github.aetherwisp.volvox.infrastructure.AbstractJdbcFinder;
@@ -27,20 +33,28 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
 
     private final PasswordRepository passwordRepository;
 
+    private final RoleRepository roleRepository;
+
+    private final PermissionRepository permissionRepository;
+
     //======================================================================
     // Constructors
     @Autowired
-    public JdbcUserRepository(final DataSource _dataSource, final ConversionService _conversionService, final PasswordRepository _passwordRepository) {
+    public JdbcUserRepository(final DataSource _dataSource, final ConversionService _conversionService, final PasswordRepository _passwordRepository,
+            final RoleRepository _roleRepository, final PermissionRepository _permissionRepository) {
         this.setDataSource(Objects.requireNonNull(_dataSource));
         this.conversionService = Objects.requireNonNull(_conversionService);
         this.passwordRepository = Objects.requireNonNull(_passwordRepository);
+        this.roleRepository = Objects.requireNonNull(_roleRepository);
+        this.permissionRepository = Objects.requireNonNull(_permissionRepository);
     }
 
     //======================================================================
     // Methods
     @Override
     public UserFinder finder() {
-        return new JdbcUserFinder(this.getNamedParameterJdbcTemplate(), this.conversionService, this.passwordRepository.finder());
+        return new JdbcUserFinder(this.getNamedParameterJdbcTemplate(), this.conversionService, this.passwordRepository.finder(), this.roleRepository.finder(),
+                this.permissionRepository.finder());
     }
 
     //======================================================================
@@ -49,14 +63,19 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
         //======================================================================
         // Fields
         private final PasswordFinder passwordFinder;
+        private final RoleFinder roleFinder;
+        private final PermissionFinder permissionFinder;
         private Integer id;
         private String name;
 
         //======================================================================
         // Constructors
-        private JdbcUserFinder(NamedParameterJdbcTemplate _jdbcTemplate, ConversionService _conversionService, PasswordFinder _passwordFinder) {
+        private JdbcUserFinder(NamedParameterJdbcTemplate _jdbcTemplate, ConversionService _conversionService, PasswordFinder _passwordFinder,
+                RoleFinder _roleFinder, PermissionFinder _permissionFinder) {
             super(_jdbcTemplate, _conversionService);
             this.passwordFinder = Objects.requireNonNull(_passwordFinder);
+            this.roleFinder = Objects.requireNonNull(_roleFinder);
+            this.permissionFinder = Objects.requireNonNull(_permissionFinder);
         }
 
         //======================================================================
@@ -85,6 +104,13 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
             if (null == password) {
                 return null;
             } else {
+                final List<Permission> permissions = this.permissionFinder.filterByRoleId(_firstId)
+                        .find();
+                this.roleFinder.filterByUserId(_firstId)
+                        .find()
+                        .stream()
+                        .peek(role -> permissions.addAll(role.getPermissions()));
+
                 return this.getJdbcTemplate()
                         .query(Queries.query()
                                 .append("SELECT id,")
@@ -100,7 +126,11 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                                         .addValue("id", _firstId, Types.INTEGER),
                                 this.getRowMapper(User.UserBuilder.class))
                         .stream()
-                        .map(builder -> builder.setPassword(password))
+                        .peek(builder -> builder.setPassword(password))
+                        .peek(builder -> builder.setPermissions(permissions.stream()
+                                .distinct()
+                                .sorted(Comparator.comparing(Permission::getId, Comparator.reverseOrder()))
+                                .collect(Collectors.toList())))
                         .map(builder -> builder.build())
                         .findFirst()
                         .orElse(null);
@@ -111,6 +141,10 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
         public List<User> find() {
             final boolean byId = (null != this.id);
             final boolean byName = (null != this.name);
+
+            // FIXME: パスワード、権限を設定
+
+
             return this.getJdbcTemplate()
                     .query(Queries.query()
                             .append("SELECT id,")
