@@ -1,16 +1,18 @@
 package com.github.aetherwisp.volvox.application.security.auth;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.github.aetherwisp.volvox.domain.user.User;
@@ -44,19 +46,38 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
         final String password = (String) _authentication.getCredentials();
 
         //======================================================================
-        // FIXME: 認証
+        // 認証
         final User user = this.userRepository.finder()
                 .filterByName(username)
                 .find()
                 .stream()
                 .findFirst()
                 .orElse(null);
+        if (null == user || !password.equals(this.passwordEncoder.encode(password))) {
+            // パスワードが違う
+            throw new BadCredentialsException("Username or password is invalid.");
+        }
+        if (!user.isAccountNonExpired()) {
+            // アカウント期限切れ
+            throw new AccountExpiredException("Account is expired.");
+        }
+        if (!user.isAccountNonLocked()) {
+            // アカウントロック
+            throw new LockedException("Account is locked.");
+        }
+        if (!user.isEnabled()) {
+            // アカウント無効
+            throw new DisabledException("Account is disabled.");
+        }
+        if (!user.isCredentialsNonExpired()) {
+            // パスワード期限切れ
+            throw new CredentialsExpiredException("Credential is expired.");
+
+        }
 
         //======================================================================
-        // FIXME: 権限付与
-        final Collection<GrantedAuthority> authorities = new ArrayList<>();
-
-        return new UsernamePasswordAuthenticationToken(username, password, authorities);
+        // 権限付与
+        return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
     }
 
     /**

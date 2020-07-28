@@ -95,23 +95,22 @@ public final class User implements Entity<User>, UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        // FIXME: 未実装
-        return false;
+        return Environments.utcDateTime()
+                .isBefore(this.expiredAt);
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // FIXME: 未実装
-        return false;
+        return !this.locked;
     }
 
     /**
-     * @return ユーザーの資格情報（パスワード）の有効期限が切れているなら true、そうでないなら false
+     * @return ユーザーの資格情報（パスワード）が有効期限内なら true、そうでないなら false
      */
     @Override
     public boolean isCredentialsNonExpired() {
         return this.password.getExpiredAt()
-                .isBefore(Environments.currentLocalDateTime());
+                .isBefore(Environments.utcDateTime());
     }
 
     //======================================================================

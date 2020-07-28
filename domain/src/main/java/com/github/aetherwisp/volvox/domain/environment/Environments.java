@@ -16,12 +16,12 @@ public final class Environments {
         ref.compareAndSet(null, Objects.requireNonNull(_environmentService));
     }
 
-    public static Instant currentInstant() {
+    public static Instant utcInstant() {
         return ref.get()
                 .currentInstant();
     }
 
-    public static LocalDateTime currentLocalDateTime() {
+    public static LocalDateTime utcDateTime() {
         return ref.get()
                 .currentLocalDateTime();
     }

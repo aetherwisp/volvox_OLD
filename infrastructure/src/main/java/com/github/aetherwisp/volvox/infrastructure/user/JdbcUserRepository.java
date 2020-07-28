@@ -93,8 +93,8 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
         }
 
         @Override
-        public User get(Integer _firstId, Integer... _remainingIds) {
-            final Password password = this.passwordFinder.filterByUserId(_firstId)
+        public User get(Integer _userId, Integer... _empties) {
+            final Password password = this.passwordFinder.filterByUserId(_userId)
                     .filterByEnabled(true)
                     .find()
                     .stream()
@@ -104,13 +104,6 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
             if (null == password) {
                 return null;
             } else {
-                final List<Permission> permissions = this.permissionFinder.filterByRoleId(_firstId)
-                        .find();
-                this.roleFinder.filterByUserId(_firstId)
-                        .find()
-                        .stream()
-                        .peek(role -> permissions.addAll(role.getPermissions()));
-
                 return this.getJdbcTemplate()
                         .query(Queries.query()
                                 .append("SELECT id,")
@@ -123,14 +116,11 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                                 .toString()
                                 .replaceAll(" +", " "),
                                 Queries.parameters()
-                                        .addValue("id", _firstId, Types.INTEGER),
+                                        .addValue("id", _userId, Types.INTEGER),
                                 this.getRowMapper(User.UserBuilder.class))
                         .stream()
                         .peek(builder -> builder.setPassword(password))
-                        .peek(builder -> builder.setPermissions(permissions.stream()
-                                .distinct()
-                                .sorted(Comparator.comparing(Permission::getId, Comparator.reverseOrder()))
-                                .collect(Collectors.toList())))
+                        .peek(builder -> builder.setPermissions(this.findPermissions(_userId)))
                         .map(builder -> builder.build())
                         .findFirst()
                         .orElse(null);
@@ -141,9 +131,6 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
         public List<User> find() {
             final boolean byId = (null != this.id);
             final boolean byName = (null != this.name);
-
-            // FIXME: パスワード、権限を設定
-
 
             return this.getJdbcTemplate()
                     .query(Queries.query()
@@ -163,10 +150,32 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                                     .addValue("name", this.name, Types.VARCHAR, byName),
                             this.getRowMapper(User.UserBuilder.class))
                     .stream()
+                    .peek(builder -> {
+                        builder.setPassword(this.passwordFinder.filterByUserId(builder.getId())
+                                .filterByEnabled(true)
+                                .find()
+                                .stream()
+                                .findFirst()
+                                .get());
+                        builder.setPermissions(this.findPermissions(builder.getId()));
+                    })
                     .map(builder -> builder.build())
                     .collect(Collectors.toList());
 
         }
 
+        private List<Permission> findPermissions(Integer _userId) {
+            final List<Permission> permissions = this.permissionFinder.filterByUserId(_userId)
+                    .find();
+            this.roleFinder.filterByUserId(_userId)
+                    .find()
+                    .stream()
+                    .peek(role -> permissions.addAll(role.getPermissions()));
+
+            return permissions.stream()
+                    .distinct()
+                    .sorted(Comparator.comparing(Permission::getId, Comparator.reverseOrder()))
+                    .collect(Collectors.toList());
+        }
     }
 }
