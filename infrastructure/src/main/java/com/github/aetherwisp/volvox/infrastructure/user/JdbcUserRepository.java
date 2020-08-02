@@ -93,9 +93,9 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
         }
 
         @Override
-        public User get(Integer _userId, Integer... _empties) {
-            final Password password = this.passwordFinder.filterByUserId(_userId)
-                    .filterByEnabled(true)
+        public User get(Integer _firstId, Integer... _remainingIds) {
+            final Integer userId = Objects.requireNonNull(_firstId);
+            final Password password = this.passwordFinder.filterByUserId(userId)
                     .find()
                     .stream()
                     .findFirst()
@@ -109,18 +109,17 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                                 .append("SELECT id,")
                                 .append("       name,")
                                 .append("       locked,")
-                                .append("       expired_at,")
-                                .append("       enabled")
+                                .append("       expired_at")
                                 .append("  FROM \"user\"")
                                 .append(" WHERE id = :id")
                                 .toString()
                                 .replaceAll(" +", " "),
                                 Queries.parameters()
-                                        .addValue("id", _userId, Types.INTEGER),
+                                        .addValue("id", userId, Types.INTEGER),
                                 this.getRowMapper(User.UserBuilder.class))
                         .stream()
                         .peek(builder -> builder.setPassword(password))
-                        .peek(builder -> builder.setPermissions(this.findPermissions(_userId)))
+                        .peek(builder -> builder.setPermissions(this.findPermissions(userId)))
                         .map(builder -> builder.build())
                         .findFirst()
                         .orElse(null);
@@ -137,8 +136,7 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                             .append("SELECT id,")
                             .append("       name,")
                             .append("       locked,")
-                            .append("       expired_at,")
-                            .append("       enabled")
+                            .append("       expired_at")
                             .append("  FROM \"user\"")
                             .append(" WHERE TRUE")
                             .append("   AND id = :id", byId)
@@ -152,7 +150,6 @@ public class JdbcUserRepository extends NamedParameterJdbcDaoSupport implements 
                     .stream()
                     .peek(builder -> {
                         builder.setPassword(this.passwordFinder.filterByUserId(builder.getId())
-                                .filterByEnabled(true)
                                 .find()
                                 .stream()
                                 .findFirst()

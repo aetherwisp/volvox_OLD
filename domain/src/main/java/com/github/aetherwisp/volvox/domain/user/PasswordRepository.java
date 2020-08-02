@@ -11,7 +11,5 @@ public interface PasswordRepository extends Repository<Password, Integer, Passwo
         PasswordFinder filterById(@NonNull Integer id);
 
         PasswordFinder filterByUserId(@NonNull Integer userId);
-
-        PasswordFinder filterByEnabled(boolean enabled);
     }
 }

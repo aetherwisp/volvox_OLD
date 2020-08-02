@@ -45,7 +45,6 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
         // Fields
         private Integer id;
         private Integer userId;
-        private Boolean enabled;
 
         //======================================================================
         // Constructors
@@ -62,8 +61,7 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
                             .append("SELECT id,")
                             .append("       user_id,")
                             .append("       password,")
-                            .append("       expired_at,")
-                            .append("       enabled")
+                            .append("       expired_at")
                             .append("  FROM user_password")
                             .append(" WHERE id = :id")
                             .toString(),
@@ -80,26 +78,22 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
         public List<Password> find() {
             final boolean byId = (null != this.id);
             final boolean byUserId = (null != this.userId);
-            final boolean byEnabled = (null != this.enabled);
 
             return this.getJdbcTemplate()
                     .query(Queries.query()
                             .append("SELECT id,")
                             .append("       user_id,")
                             .append("       password,")
-                            .append("       expired_at,")
-                            .append("       enabled")
+                            .append("       expired_at")
                             .append("  FROM user_password")
                             .append(" WHERE TRUE")
                             .append("   AND id = :id", byId)
                             .append("   AND user_id = :userId", byUserId)
-                            .append("   AND enabled = :enabled", byEnabled)
                             .append(" ORDER BY id DESC")
                             .toString(),
                             Queries.parameters()
                                     .addValue("id", this.id, Types.INTEGER, byId)
-                                    .addValue("userId", this.userId, Types.INTEGER, byUserId)
-                                    .addValue("enabled", this.enabled, Types.BOOLEAN, byEnabled),
+                                    .addValue("userId", this.userId, Types.INTEGER, byUserId),
                             this.getRowMapper(Password.PasswordBuilder.class))
                     .stream()
                     .map(builder -> builder.build())
@@ -115,12 +109,6 @@ public class JdbcPasswordRepository extends NamedParameterJdbcDaoSupport impleme
         @Override
         public PasswordFinder filterByUserId(@NonNull Integer _userId) {
             this.userId = Objects.requireNonNull(_userId);
-            return this;
-        }
-
-        @Override
-        public PasswordFinder filterByEnabled(boolean _enabled) {
-            this.enabled = Boolean.valueOf(_enabled);
             return this;
         }
     }

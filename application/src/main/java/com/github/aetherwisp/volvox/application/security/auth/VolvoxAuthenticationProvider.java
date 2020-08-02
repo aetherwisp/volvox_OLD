@@ -53,7 +53,7 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
                 .stream()
                 .findFirst()
                 .orElse(null);
-        if (null == user || !password.equals(this.passwordEncoder.encode(password))) {
+        if (null == user || !this.passwordEncoder.matches(password, user.getPassword())) {
             // パスワードが違う
             throw new BadCredentialsException("Username or password is invalid.");
         }

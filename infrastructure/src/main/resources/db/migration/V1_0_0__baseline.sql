@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS "user" (
     "name"        VARCHAR(255)  NOT NULL,
     "locked"      BOOLEAN       NOT NULL,
     "expired_at"  TIMESTAMP     NOT NULL,
-    "enabled"     BOOLEAN       NOT NULL,
     "created_at"  TIMESTAMP     NOT NULL,
     "created_by"  INTEGER       NOT NULL,
     "updated_at"  TIMESTAMP     NOT NULL,
@@ -19,7 +18,6 @@ COMMENT ON COLUMN "user"."id" IS '【ユーザ ID】ユーザの識別子';
 COMMENT ON COLUMN "user"."name" IS '【ユーザ名】ユーザの名称';
 COMMENT ON COLUMN "user"."locked" IS '【ロック済み】TRUE：ロック中、FALSE：ロックされていない';
 COMMENT ON COLUMN "user"."expired_at" IS '【有効期限】このユーザの有効期限';
-COMMENT ON COLUMN "user"."enabled" IS '【有効】TRUE：有効、FALSE：無効';
 COMMENT ON COLUMN "user"."created_at" IS '【作成日時】レコードを作成した日時';
 COMMENT ON COLUMN "user"."created_by" IS '【作成者】レコードを作成した日時';
 COMMENT ON COLUMN "user"."updated_at" IS '【更新日時】レコードを更新した日時';
@@ -34,7 +32,6 @@ CREATE TABLE IF NOT EXISTS "user_password" (
     "user_id"     INTEGER       NOT NULL,
     "password"    VARCHAR(255)  NOT NULL,
     "expired_at"  TIMESTAMP     NOT NULL,
-    "enabled"     BOOLEAN       NOT NULL,
     "created_at"  TIMESTAMP     NOT NULL,
     "created_by"  INTEGER       NOT NULL,
     "updated_at"  TIMESTAMP     NOT NULL,
@@ -46,7 +43,6 @@ COMMENT ON COLUMN "user_password"."id" IS '【パスワード ID】パスワー�
 COMMENT ON COLUMN "user_password"."user_id" IS '【ユーザ ID】パスワードを所有するユーザの ID';
 COMMENT ON COLUMN "user_password"."password" IS '【パスワード】パスワード文字列';
 COMMENT ON COLUMN "user_password"."expired_at" IS '【有効期限】パスワードの有効期限';
-COMMENT ON COLUMN "user_password"."enabled" IS '【有効】TRUE：有効、FALSE：無効';
 COMMENT ON COLUMN "user_password"."created_at" IS '【作成日時】レコードを作成した日時';
 COMMENT ON COLUMN "user_password"."created_by" IS '【作成者】レコードを作成した日時';
 COMMENT ON COLUMN "user_password"."updated_at" IS '【更新日時】レコードを更新した日時';

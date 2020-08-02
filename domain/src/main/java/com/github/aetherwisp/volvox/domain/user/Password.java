@@ -10,8 +10,7 @@ public class Password {
         ID("id"),
         USER_ID("userId", "user_id", "user-id"),
         PASSWORD("password"),
-        EXPIRED_AT("expiredAt", "expired_at", "expired-at"),
-        ENABLED("enabled");
+        EXPIRED_AT("expiredAt", "expired_at", "expired-at");
 
 
         private final String camelCase;
@@ -60,9 +59,6 @@ public class Password {
     /** 【有効期限】パスワードの有効期限 */
     private final LocalDateTime expiredAt;
 
-    /** 【有効】TRUE：有効、FALSE：無効 */
-    private final boolean enabled;
-
     //======================================================================
     // Constructors
     private Password(final PasswordBuilder _builder) {
@@ -71,7 +67,6 @@ public class Password {
         this.userId = Objects.requireNonNull(builder.userId);
         this.password = Objects.requireNonNull(builder.password);
         this.expiredAt = Objects.requireNonNull(builder.expiredAt);
-        this.enabled = builder.enabled;
     }
 
     //======================================================================
@@ -92,10 +87,6 @@ public class Password {
         return this.expiredAt;
     }
 
-    public boolean isEnabled() {
-        return this.enabled;
-    }
-
     //======================================================================
     // Classes
     public static class PasswordBuilder implements Builder<Password> {
@@ -103,7 +94,6 @@ public class Password {
         private Integer userId;
         private String password;
         private LocalDateTime expiredAt;
-        private boolean enabled;
 
         //======================================================================
         // Methods
@@ -130,10 +120,6 @@ public class Password {
             return this.expiredAt;
         }
 
-        public boolean isEnabled() {
-            return this.enabled;
-        }
-
         //======================================================================
         // Setters
         public void setId(Integer _id) {
@@ -150,10 +136,6 @@ public class Password {
 
         public void setExpiredAt(LocalDateTime _expiredAt) {
             this.expiredAt = _expiredAt;
-        }
-
-        public void setEnabled(boolean _enabled) {
-            this.enabled = _enabled;
         }
 
     }

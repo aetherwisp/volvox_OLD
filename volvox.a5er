@@ -230,12 +230,11 @@ Field="ユーザ ID","id","INTEGER","NOT NULL",0,"","【ユーザ ID】ユーザ
 Field="ユーザ名","name","VARCHAR(255)","NOT NULL",,"","【ユーザ名】ユーザの名称",$00FF4100,""
 Field="ロック済み","locked","BOOLEAN","NOT NULL",,"","【ロック済み】TRUE：ロック中、FALSE：ロックされていない",$FFFFFFFF,""
 Field="有効期限","expired_at","TIMESTAMP","NOT NULL",,"","【有効期限】このユーザの有効期限",$FFFFFFFF,""
-Field="有効","enabled","BOOLEAN","NOT NULL",,"","【有効】TRUE：有効、FALSE：無効",$FFFFFFFF,""
 Index=uq_user_name=2,name
 EffectMode=Gradation
 Color=$000000
 BkColor=$C0C0C0
-ModifiedDateTime=20200514164445
+ModifiedDateTime=20200729180050
 Position="MAIN",1500,400
 ZOrder=0
 
@@ -251,11 +250,10 @@ Field="パスワード ID","id","INTEGER","NOT NULL",0,"","【パスワード ID
 Field="ユーザ ID","user_id","INTEGER","NOT NULL",,"","【ユーザ ID】パスワードを所有するユーザの ID",$FFFFFFFF,""
 Field="パスワード","password","VARCHAR(255)","NOT NULL",,"","【パスワード】パスワード文字列",$FFFFFFFF,""
 Field="有効期限","expired_at","TIMESTAMP","NOT NULL",,"","【有効期限】パスワードの有効期限",$FFFFFFFF,""
-Field="有効","enabled","BOOLEAN","NOT NULL",,"FALSE","【有効】TRUE：有効、FALSE：無効",$FFFFFFFF,""
 EffectMode=Gradation
 Color=$000000
 BkColor=$C0C0C0
-ModifiedDateTime=20200514170146
+ModifiedDateTime=20200729174533
 Position="MAIN",200,1500
 ZOrder=1
 

@@ -29,9 +29,6 @@ public final class User implements Entity<User>, UserDetails {
     /** The expiration UTC date for this user. */
     private final LocalDateTime expiredAt;
 
-    /** {@code true} if this user is valid, {@code false} otherwise. */
-    private final boolean enabled;
-
     private final Password password;
 
     private List<Permission> permissions;
@@ -44,7 +41,6 @@ public final class User implements Entity<User>, UserDetails {
         this.name = Objects.requireNonNull(builder.name);
         this.locked = builder.locked;
         this.expiredAt = Objects.requireNonNull(builder.expiredAt);
-        this.enabled = builder.enabled;
         this.password = Objects.requireNonNull(builder.password);
         this.permissions = Collections.unmodifiableList(new ArrayList<>(builder.permissions));
     }
@@ -75,7 +71,7 @@ public final class User implements Entity<User>, UserDetails {
     }
 
     public boolean isEnabled() {
-        return this.enabled;
+        return this.isAccountNonExpired() && this.isAccountNonLocked() && this.isCredentialsNonExpired() && this.isLocked();
     }
 
     @Override
@@ -120,7 +116,6 @@ public final class User implements Entity<User>, UserDetails {
         private String name;
         private boolean locked;
         private LocalDateTime expiredAt;
-        private boolean enabled;
         private Password password;
         private final List<Permission> permissions = new ArrayList<>();
 
@@ -145,10 +140,6 @@ public final class User implements Entity<User>, UserDetails {
 
         public LocalDateTime getExpiredAt() {
             return this.expiredAt;
-        }
-
-        public boolean isEnabled() {
-            return this.enabled;
         }
 
         public Password getPassword() {
@@ -178,11 +169,6 @@ public final class User implements Entity<User>, UserDetails {
 
         public UserBuilder setExpiredAt(LocalDateTime _expiredAt) {
             this.expiredAt = _expiredAt;
-            return this;
-        }
-
-        public UserBuilder setEnabled(boolean _enabled) {
-            this.enabled = _enabled;
             return this;
         }
 

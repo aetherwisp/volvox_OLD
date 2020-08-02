@@ -23,9 +23,6 @@ spring:
       transaction-isolation: TRANSACTION_READ_COMMITTED
       maximum-pool-size: 10
       register-mbeans: false
-#  flyway:
-#    schemas: volvox
-#    default-schema: volvox
   h2:
     console:
       enabled: true

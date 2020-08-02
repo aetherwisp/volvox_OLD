@@ -37,6 +37,10 @@
             <AppenderRef ref="STDOUT" />
         </Logger>
 
+        <Logger name="com.ninja_squad.dbsetup" level="DEBUG" additivity="false">
+            <AppenderRef ref="STDOUT" />
+        </Logger>
+
         <!-- Root -->
         <Root level="INFO">
             <AppenderRef ref="STDOUT" />
