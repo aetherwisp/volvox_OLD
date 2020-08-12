@@ -1,6 +1,7 @@
 package com.github.aetherwisp.volvox.application.security.auth;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,5 +27,6 @@ public class VolvoxAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             throws IOException, ServletException {
         super.onAuthenticationSuccess(_request, _response, _authentication);
         _response.setContentType(this.contentType);
+        _response.setCharacterEncoding(StandardCharsets.UTF_8.displayName());
     }
 }

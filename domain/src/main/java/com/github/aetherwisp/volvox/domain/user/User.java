@@ -71,7 +71,7 @@ public final class User implements Entity<User>, UserDetails {
     }
 
     public boolean isEnabled() {
-        return this.isAccountNonExpired() && this.isAccountNonLocked() && this.isCredentialsNonExpired() && this.isLocked();
+        return this.isAccountNonExpired() && this.isAccountNonLocked() && this.isCredentialsNonExpired() && !this.isLocked();
     }
 
     @Override
@@ -105,8 +105,8 @@ public final class User implements Entity<User>, UserDetails {
      */
     @Override
     public boolean isCredentialsNonExpired() {
-        return this.password.getExpiredAt()
-                .isBefore(Environments.utcDateTime());
+        return Environments.utcDateTime()
+                .isBefore(this.password.getExpiredAt());
     }
 
     //======================================================================

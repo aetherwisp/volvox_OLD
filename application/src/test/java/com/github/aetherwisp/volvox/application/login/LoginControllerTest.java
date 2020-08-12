@@ -136,9 +136,9 @@ public class LoginControllerTest {
                     .with(SecurityMockMvcRequestPostProcessors.csrf()))
                     .andDo(print())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
-                    .andExpect(status().isOk())
+                    .andExpect(status().isFound())
                     .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                    .andExpect(view().name("login"));
+                    .andExpect(view().name("menu"));
 
         }
     }
