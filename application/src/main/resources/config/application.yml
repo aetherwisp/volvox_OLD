@@ -3,6 +3,8 @@
 # ----------------------------------------
 aetherwisp:
   volvox:
+    presentation:
+      version: v121p_2020-08-11
     application:
       webjars:
         bootstrap: 4.5.0

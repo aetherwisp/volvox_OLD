@@ -12,7 +12,7 @@ public class LoginController {
     // Methods
     @GetMapping(path = {"/"}, produces = MediaType.TEXT_HTML_VALUE)
     public ModelAndView get() {
-        return new ModelAndView("login");
+        return new ModelAndView("index");
     }
 
     //    @PostMapping(path = {"/login"}, produces = MediaType.APPLICATION_JSON_VALUE)

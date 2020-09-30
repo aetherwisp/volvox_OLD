@@ -9,6 +9,9 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 
 @SpringBootApplication
 public class Main {
+    static {
+        System.setProperty("java.awt.headless", "false");
+    }
     //======================================================================
     // Methods
     public static void main(String[] _args) {

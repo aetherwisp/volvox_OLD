@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Volvox | Log in</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/plugins/fontawesome-free/css/all.min.css}">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/plugins/icheck-bootstrap/icheck-bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/AdminLTE/dist/css/adminlte.min.css}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo"><b>Volvox</b> Login</div>
+
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Sign in to start your session</p>
+
+                <form id="login-form">
+                    <div class="input-group mb-3">
+                        <input type="text" name="username" class="form-control" placeholder="Email">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button id="login-button" type="button" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center mb-3">
+                    <p>- OR -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    </a>
+                </div>
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">I forgot my password</a>
+                </p>
+                <p class="mb-0">
+                    <a href="register.html" class="text-center">Register a new membership</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+    <script th:src="@{/webjars/AdminLTE/plugins/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/AdminLTE/dist/js/adminlte.min.js}"></script>
+    <script>
+        $(function () {
+            $('#login-button').on('click', function () {
+                let headers = {};
+                headers[$("meta[name='_csrf_header']").attr("content")] = $("meta[name='_csrf']").attr("content");
+                $.ajax({
+                    headers: headers,
+                    type: 'POST',
+                    url: 'login',
+                    data: $('#login-form').serializeArray(),
+                    dataType: 'json'
+                }).done(function (data) {
+                    alert('success!!');
+                }).fail(function (data) {
+                    alert('error!!!');
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

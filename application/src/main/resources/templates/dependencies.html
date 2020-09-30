@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <!-- ===== -->
+    <!-- axios -->
+    <!-- ===== -->
+    <script th:fragment="axios" th:src="@{/webjars/axios/dist/axios.min.js}"></script>
+
+    <!-- =========== -->
+    <!-- SmartClient -->
+    <!-- =========== -->
+    <div th:fragment="smartclient" th:remove="tag">
+        <script th:inline="javascript">var isomorphicDir = /*[[ @{/js/lib/isomorphic/smartclient/{version}/(version=${@smartclient.version})} ]]*/'';</script>
+        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Core.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Foundation.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Containers.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Grids.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Forms.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_DataBinding.js(version=${@smartclient.version})}"></script>
+    </div>
+</body>
