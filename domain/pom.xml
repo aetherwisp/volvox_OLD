@@ -58,4 +58,8 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <directory>${volvox.build.directory}/domain/target</directory>
+    </build>
 </project>

@@ -4,6 +4,7 @@
 aetherwisp:
   volvox:
     application:
+      browser-startup: false
       version: 1.0.0
 
 # ----------------------------------------

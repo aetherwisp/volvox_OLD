@@ -181,6 +181,11 @@
 			<version>${project.version}</version>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.aetherwisp</groupId>
+			<artifactId>volvox-webjars-smartclient</artifactId>
+			<version>v121p_2020-08-11</version>
+		</dependency>
 	</dependencies>
 
 
@@ -188,6 +193,8 @@
 	<!-- BUILD SECTION -->
 	<!-- ============= -->
 	<build>
+        <directory>${volvox.build.directory}/application/target</directory>
+
 		<!-- ================= -->
 		<!-- RESOURCES SECTION -->
 		<!-- ================= -->

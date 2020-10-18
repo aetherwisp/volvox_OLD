@@ -1,6 +1,8 @@
 package com.github.aetherwisp.volvox;
 
 public class Volvox {
+    public static final String CONFIG_ROOT = "aetherwisp.volvox";
+
     //======================================================================
     // Constants
     public static class Profiles {

@@ -80,6 +80,8 @@
     </dependencies>
 
     <build>
+        <directory>${volvox.build.directory}/infrastructure/target</directory>
+
         <!-- =============== -->
         <!-- PLUGINS SECTION -->
         <!-- =============== -->

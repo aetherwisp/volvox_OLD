@@ -5,12 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import com.github.aetherwisp.volvox.Volvox;
 
 @Component("volvox")
 public class VolvoxApplicationConfiguration {
     //======================================================================
     // Constants
-    public static final String PREFIX = "aetherwisp.volvox.application";
+    public static final String PREFIX = Volvox.CONFIG_ROOT + ".application";
 
     //======================================================================
     // Fields
@@ -21,7 +22,8 @@ public class VolvoxApplicationConfiguration {
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxApplicationConfiguration(@Value("${" + VolvoxApplicationConfiguration.PREFIX + ".version}") final String _version, final WebJars _webjars) {
+    public VolvoxApplicationConfiguration(@Value("${" + VolvoxApplicationConfiguration.PREFIX
+            + ".version}") final String _version, final WebJars _webjars) {
         this.version = Objects.requireNonNull(_version);
         this.webjars = Objects.requireNonNull(_webjars);
     }
@@ -56,7 +58,8 @@ public class VolvoxApplicationConfiguration {
         //======================================================================
         // Constructors
         @Autowired
-        public WebJars(@Value("${" + WebJars.PREFIX + ".bootstrap}") final String _bootstrap, @Value("${" + WebJars.PREFIX + ".jquery}") final String _jquery) {
+        public WebJars(@Value("${" + WebJars.PREFIX + ".bootstrap}") final String _bootstrap,
+                @Value("${" + WebJars.PREFIX + ".jquery}") final String _jquery) {
             this.bootstrap = Objects.requireNonNull(_bootstrap);
             this.jquery = Objects.requireNonNull(_jquery);
         }

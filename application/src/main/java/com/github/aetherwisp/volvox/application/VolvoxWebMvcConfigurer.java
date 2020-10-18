@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.resource.WebJarsResourceResolver;
+import org.springframework.web.servlet.resource.EncodedResourceResolver;
 
 @Configuration
 @EnableWebMvc
@@ -14,7 +14,7 @@ public class VolvoxWebMvcConfigurer implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry _registry) {
         _registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/")
-                .resourceChain(true)
-                .addResolver(new WebJarsResourceResolver());
+                .resourceChain(false)
+                .addResolver(new EncodedResourceResolver());
     }
 }

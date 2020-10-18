@@ -6,6 +6,7 @@ aetherwisp:
     presentation:
       version: v121p_2020-08-11
     application:
+      browser-startup: true
       webjars:
         bootstrap: 4.5.0
         jquery: 3.5.1
@@ -24,3 +25,7 @@ spring:
       enabled: true
   profiles:
     active: product
+  resources:
+    chain:
+      # Jar ファイルに内包された GZip 済みリソースを使うようにする
+      compressed: true
