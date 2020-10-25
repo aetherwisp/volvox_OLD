@@ -37,7 +37,7 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity _web) throws Exception {
         _web.ignoring()
-                .antMatchers("/webjars/**");
+                .antMatchers("/favicon.png", "/**/*.js", "/webjars/**");
     }
 
     @Override
@@ -54,7 +54,8 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
         _http.formLogin()
                 .loginPage("/")
                 .loginProcessingUrl("/login")
-                .successHandler(new VolvoxAuthenticationSuccessHandler("/menu", MediaType.TEXT_HTML_VALUE))
+                .successHandler(
+                        new VolvoxAuthenticationSuccessHandler("/menu", MediaType.TEXT_HTML_VALUE))
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll();

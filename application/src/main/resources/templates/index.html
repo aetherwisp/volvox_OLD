@@ -6,6 +6,7 @@
         <meta charset="utf-8">
         <title>Volvox - INDEX</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <base href="/" />
 	    <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png?v={version}(version=${@volvox.version})}"/>
 
         <!-- =========== -->
@@ -17,11 +18,9 @@
         <!-- =========== -->
         <!-- App Scripts -->
         <!-- =========== -->
-        <script th:src="@{/js/app/util/ajax.js?v={version}(version=${@volvox.version})}"></script>
     </head>
     <body>
-<!--
-        <script th:src="@{/js/app/login/app.js?v={version}(version=${@volvox.version})}"></script>
--->
+        <script th:src="@{/js/app/util/ajax.js?v={version}(version=${@volvox.version})}"></script>
+        <script th:src="@{/index/app.js?v={version}(version=${@volvox.version})}"></script>
     </body>
 </html>

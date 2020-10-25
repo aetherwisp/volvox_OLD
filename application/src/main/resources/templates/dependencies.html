@@ -13,12 +13,12 @@
     <!-- SmartClient -->
     <!-- =========== -->
     <div th:fragment="smartclient" th:remove="tag">
-        <script th:inline="javascript">var isomorphicDir = /*[[ @{/js/lib/isomorphic/smartclient/{version}/(version=${@smartclient.version})} ]]*/'';</script>
-        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Core.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Foundation.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Containers.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Grids.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_Forms.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/js/lib/isomorphic/smartclient/{version}/system/modules/ISC_DataBinding.js(version=${@smartclient.version})}"></script>
+        <script th:inline="javascript">var isomorphicDir = '/webjars/isomorphic/smartclient/v121p_2020-08-11/';</script>
+        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Core.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Foundation.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Containers.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Grids.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Forms.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_DataBinding.js(version=${@smartclient.version})}"></script>
     </div>
 </body>

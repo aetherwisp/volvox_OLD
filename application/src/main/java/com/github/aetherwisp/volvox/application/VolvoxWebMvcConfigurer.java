@@ -12,6 +12,10 @@ public class VolvoxWebMvcConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry _registry) {
+        _registry.addResourceHandler("/**/*.js")
+                .addResourceLocations("classpath:/static/")
+                .resourceChain(true)
+                .addResolver(new EncodedResourceResolver());
         _registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/")
                 .resourceChain(false)
