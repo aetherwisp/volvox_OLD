@@ -4,12 +4,13 @@
 aetherwisp:
   volvox:
     presentation:
-      version: v121p_2020-08-11
+      lib:
+        axios:
+          version: 0.21.0
+        smartclient:
+          version: v121p_2020-08-11
     application:
       browser-startup: true
-      webjars:
-        bootstrap: 4.5.0
-        jquery: 3.5.1
 
 # ----------------------------------------
 # Common Application properties

@@ -25,7 +25,6 @@
 		<module>application</module>
 		<module>domain</module>
 		<module>infrastructure</module>
-		<module>webjars/isomorphic/smartclient</module>
 	</modules>
 
 

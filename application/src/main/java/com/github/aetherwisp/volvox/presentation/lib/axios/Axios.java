@@ -1,16 +1,16 @@
-package com.github.aetherwisp.volvox.webjars.smartclient;
+package com.github.aetherwisp.volvox.presentation.lib.axios;
 
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.github.aetherwisp.volvox.Volvox;
+import com.github.aetherwisp.volvox.presentation.PresentationConfiguration;
 
-@Component("smartclient")
-public class SmartClient {
+@Component("axios")
+public class Axios {
     //======================================================================
     // Constants
-    public static final String PREFIX = Volvox.CONFIG_ROOT + ".webjars.smartclient";
+    public static final String PREFIX = PresentationConfiguration.PREFIX + ".lib.axios";
 
     //======================================================================
     // Fields
@@ -19,7 +19,7 @@ public class SmartClient {
     //======================================================================
     // Constructors
     @Autowired
-    public SmartClient(@Value("${" + SmartClient.PREFIX + ".version}") final String _version) {
+    public Axios(@Value("${" + Axios.PREFIX + ".version}") final String _version) {
         this.version = Objects.requireNonNull(_version);
     }
 

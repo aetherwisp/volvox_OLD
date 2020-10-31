@@ -1,4 +1,4 @@
-var LOADMASK = app.LoadMask.create();
+//var LOADMASK = app.LoadMask.create();
 
 isc.VLayout.create({
     width: '100%',

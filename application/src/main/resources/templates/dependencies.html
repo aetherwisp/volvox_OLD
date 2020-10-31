@@ -7,18 +7,21 @@
     <!-- ===== -->
     <!-- axios -->
     <!-- ===== -->
-    <script th:fragment="axios" th:src="@{/webjars/axios/dist/axios.min.js}"></script>
+    <script th:fragment="axios" th:src="@{/lib/axios/{version}/axios.min.js(version=${@axios.version})}"></script>
 
     <!-- =========== -->
     <!-- SmartClient -->
     <!-- =========== -->
     <div th:fragment="smartclient" th:remove="tag">
-        <script th:inline="javascript">var isomorphicDir = '/webjars/isomorphic/smartclient/v121p_2020-08-11/';</script>
-        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Core.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Foundation.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Containers.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Grids.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_Forms.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/webjars/isomorphic/smartclient/{version}/system/modules/ISC_DataBinding.js(version=${@smartclient.version})}"></script>
+        <script th:inline="javascript">
+        	var isomorphicDir = /*[[ @{lib/isomorphic/smartclient/{version}/(version=${@smartclient.version})} ]]*/'';
+        </script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Core.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Foundation.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Containers.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Grids.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Forms.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_DataBinding.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{/lib/isomorphic/smartclient/{version}/skins/Graphite/load_skin.js(version=${@smartclient.version})}"></script>
     </div>
 </body>

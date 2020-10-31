@@ -1,8 +1,0 @@
-# ----------------------------------------
-# Project specific properties
-# ----------------------------------------
-aetherwisp:
-  volvox:
-    webjars:
-      smartclient:
-        version: ${project.version}

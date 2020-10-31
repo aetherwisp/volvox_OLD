@@ -37,7 +37,7 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity _web) throws Exception {
         _web.ignoring()
-                .antMatchers("/favicon.png", "/**/*.js", "/webjars/**");
+                .antMatchers("/app/**", "/lib/**", "/webjars/**");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         // Addresses that allow access even when you are not logged in.
         _http.authorizeRequests()
-                .antMatchers("/", "/error")
+                .antMatchers("/", "/index", "/login", "/logout", "/error")
                 .permitAll()
                 .anyRequest()
                 .authenticated();

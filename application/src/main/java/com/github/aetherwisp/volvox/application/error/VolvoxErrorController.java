@@ -1,7 +1,7 @@
 package com.github.aetherwisp.volvox.application.error;
 
-import static java.lang.invoke.MethodHandles.*;
-import static org.apache.logging.log4j.LogManager.*;
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.apache.logging.log4j.LogManager.getLogger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.Logger;
@@ -32,7 +32,9 @@ public class VolvoxErrorController implements ErrorController {
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxErrorController(@Value("${server.error.path:${error.path:/error}}") String _errorPath, ErrorAttributes _errorAttributes) {
+    public VolvoxErrorController(
+            @Value("${server.error.path:${error.path:/error}}") String _errorPath,
+            ErrorAttributes _errorAttributes) {
         this.errorPath = _errorPath;
         this.errorAttributes = _errorAttributes;
     }
@@ -43,7 +45,8 @@ public class VolvoxErrorController implements ErrorController {
     public ModelAndView errorHtml(HttpServletRequest _request, HttpServletResponse _response) {
 
         final WebRequest webRequest = new ServletWebRequest(_request);
-        LOG.debug(this.errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.of(Include.BINDING_ERRORS, Include.EXCEPTION)));
+        LOG.debug(this.errorAttributes.getErrorAttributes(webRequest,
+                ErrorAttributeOptions.of(Include.BINDING_ERRORS, Include.EXCEPTION)));
         LOG.error(this.errorAttributes.getError(webRequest));
 
         // TODO: View を返すエンドポイントはまだ無いので何もしない
@@ -53,7 +56,7 @@ public class VolvoxErrorController implements ErrorController {
 
     /**
      * レスポンスの Content-Type が application/json で、 例外が発生するか HTTP ステータスコードが 400 以上のレスポンスをハンドリングします。
-     * 
+     *
      * @param _request HTTP リクエスト
      * @param _response HTTP レスポンス
      * @return JSON または null
@@ -61,7 +64,8 @@ public class VolvoxErrorController implements ErrorController {
     @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public String errorJson(HttpServletRequest _request, HttpServletResponse _response) {
 
-        LOG.debug(this.errorAttributes.getErrorAttributes(new ServletWebRequest(_request), false));
+        LOG.debug(this.errorAttributes.getErrorAttributes(new ServletWebRequest(_request),
+                ErrorAttributeOptions.defaults()));
 
         // FIXME: エラー時のレスポンス仕様を決める
 

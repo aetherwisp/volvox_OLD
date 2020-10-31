@@ -20,6 +20,7 @@
 	<!-- PROPERTIES SECTION -->
 	<!-- ================== -->
 	<properties>
+        <smartclient.version>v121p_2020-08-11</smartclient.version>
 	</properties>
 
 
@@ -111,25 +112,6 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
-		<!-- =================== -->
-		<!-- WebJar for AdminLTE -->
-		<!-- =================== -->
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>webjars-locator</artifactId>
-			<version>0.40</version>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>AdminLTE</artifactId>
-			<version>3.0.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.webjars.npm</groupId>
-			<artifactId>axios</artifactId>
-			<version>0.19.2</version>
-		</dependency>
-
 		<!-- ============= -->
 		<!-- AOP Libraries -->
 		<!-- ============= -->
@@ -180,11 +162,6 @@
 			<artifactId>volvox-infrastructure</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.aetherwisp</groupId>
-			<artifactId>volvox-webjars-smartclient</artifactId>
-			<version>v121p_2020-08-11</version>
 		</dependency>
 	</dependencies>
 
