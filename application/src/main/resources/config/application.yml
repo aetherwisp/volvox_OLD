@@ -28,5 +28,4 @@ spring:
     active: product
   resources:
     chain:
-      # Jar ファイルに内包された GZip 済みリソースを使うようにする
       compressed: true

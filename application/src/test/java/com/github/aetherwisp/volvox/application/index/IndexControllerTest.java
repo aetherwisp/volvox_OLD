@@ -3,6 +3,7 @@ package com.github.aetherwisp.volvox.application.index;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import java.nio.charset.StandardCharsets;
@@ -58,7 +59,7 @@ public class IndexControllerTest {
     //======================================================================
     // Tests
     @Nested
-    @DisplayName("ログイン表示")
+    @DisplayName("ログイン画面表示")
     public class ShowTest {
         @BeforeEach
         public void setUp() {
@@ -77,14 +78,24 @@ public class IndexControllerTest {
         }
 
         @Test
-        @DisplayName("初期表示")
-        public void showPage() throws Exception {
+        @DisplayName("ログイン画面へリダイレクト")
+        public void redirectIndexPage() throws Exception {
             mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON))
+                    .andDo(print())
+                    .andExpect(status().isMovedPermanently())
+                    .andExpect(redirectedUrl("index"));
+
+        }
+
+        @Test
+        @DisplayName("初期表示")
+        public void showIndexPage() throws Exception {
+            mockMvc.perform(get("/index").contentType(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
                     .andExpect(status().isOk())
                     .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                    .andExpect(view().name("login"));
+                    .andExpect(view().name("index"));
 
         }
     }

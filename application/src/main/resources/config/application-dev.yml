@@ -21,8 +21,6 @@ spring:
         cache-private: true
         must-revalidate: true
         no-store: true
-    chain:
-      compressed: true
     static-locations: file:src/main/resources/static/
   thymeleaf:
     cache: false
