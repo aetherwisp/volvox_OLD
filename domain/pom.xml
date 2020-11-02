@@ -61,5 +61,7 @@
 
     <build>
         <directory>${volvox.build.directory}/domain/target</directory>
+        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+        <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
     </build>
 </project>

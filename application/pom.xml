@@ -171,6 +171,8 @@
 	<!-- ============= -->
 	<build>
         <directory>${volvox.build.directory}/application/target</directory>
+        <outputDirectory>${project.build.directory}/classes</outputDirectory>
+        <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
 
 		<!-- ================= -->
 		<!-- RESOURCES SECTION -->
