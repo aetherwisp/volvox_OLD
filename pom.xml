@@ -35,8 +35,6 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <volvox.build.directory>R:/develop/eclipse/workspace/volvox</volvox.build.directory>
     </properties>
 
 
@@ -83,7 +81,7 @@
     </dependencyManagement>
 
     <build>
-        <directory>${volvox.build.directory}/${project.artifactId}/target</directory>
+        <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory>
 
         <pluginManagement>
             <plugins>
