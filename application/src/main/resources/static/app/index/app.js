@@ -134,13 +134,6 @@ isc.VLayout.create({
                     // Methods
                     login: function() {
                         let form = this;
-
-                        LOADMASK.show();
-                        app.Ajax.postAsForm(form, /*[[ @{${T(com.github.aetherwisp.volvox.application.WebApp.Locations).LOGIN_VALUE}} ]]*/'', form.getValues(), function(_common, _result) {
-                            LOADMASK.hide();
-                        }, function(_common, _result) {
-                            LOADMASK.hide();
-                        });
                     },
 
                     //======================================================================
