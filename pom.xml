@@ -82,25 +82,6 @@
 
     <build>
         <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory>
-
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-eclipse-plugin</artifactId>
-                    <version>2.10</version>
-                    <configuration>
-                        <linkedResources>
-                            <linkedResource>
-                                <name>target</name>
-                                <type>1</type>
-                                <location>${volvox.build.directory}/${project.artifactId}/target</location>
-                            </linkedResource>
-                        </linkedResources>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
 </project>
