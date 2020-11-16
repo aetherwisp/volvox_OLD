@@ -78,7 +78,7 @@ public abstract class AbstractWebMvcConfigurer
 
     private ITemplateResolver htmlTemplateResolver() {
         final SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
-        resolver.setOrder(0);
+        resolver.setOrder(Integer.valueOf(0));
         resolver.setCheckExistence(true);
         resolver.setApplicationContext(applicationContext);
         resolver.setPrefix(this.htmlPrefix);
@@ -91,7 +91,7 @@ public abstract class AbstractWebMvcConfigurer
     public ITemplateResolver javascriptTemplateResolver() {
         final SpringResourceTemplateResolver resolver = new SpringResourceTemplateResolver();
         resolver.setApplicationContext(applicationContext);
-        resolver.setOrder(1);
+        resolver.setOrder(Integer.valueOf(1));
         resolver.setCheckExistence(true);
         resolver.setPrefix(this.javascriptPrefix);
         resolver.setCacheable(false);
