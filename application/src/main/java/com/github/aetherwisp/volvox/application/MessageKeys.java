@@ -16,7 +16,7 @@ public interface MessageKeys {
         public static final String ERROR_ACCOUNT_EXPIRED = PREFIX + ".account.expired";
 
         /** アカウントロック */
-        public static final String ERROR_ACCOUNT_LOCKED = PREFIX + "..account.locked";
+        public static final String ERROR_ACCOUNT_LOCKED = PREFIX + ".account.locked";
 
         /** アカウント無効 */
         public static final String ERROR_ACCOUNT_DISABLED = PREFIX + ".account.disabled";
