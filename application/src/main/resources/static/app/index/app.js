@@ -1,5 +1,7 @@
 //var LOADMASK = app.LoadMask.create();
 
+//======================================================================
+// Layouts
 isc.VLayout.create({
     width: '100%',
     height: '100%',
@@ -21,20 +23,29 @@ isc.VLayout.create({
             defaultLayoutAlign: 'center',
             defaultResizeBars: 'marked',
             members: [
+                // isc.VLayout.create({
+                //     width: '100%',
+                //     height: '100%',
+                //     layoutMargin: 0,
+                //     showResizeBars: false,
+                //     members: [
+
+                //     ]
+                // }),
                 isc.LayoutSpacer.create({
                     width: '*',
                     height: '100%'
                 }),
                 isc.DynamicForm.create({
-                    action: /*[[ @{login} ]]*/'',
+                    action: /*[[ @{/login} ]]*/'',
                     autoDraw: false,
                     autoFocus: true,
                     autoFocusOnError: false,
                     canSubmit: true,
                     fields: [{
                         type: 'hidden',
-                        name: '_csrf',
-                        value: /*[[${csrfToken}]]*/''
+                        name: document.querySelector('meta[name="_csrfParameterName"]').content,
+                        value: document.querySelector('meta[name="_csrfToken"]').content
                     }, {
                         name: 'username',
                         title: 'Username',
@@ -47,9 +58,9 @@ isc.VLayout.create({
                         showErrorIcon: true,
                         hint: 'ユーザ名',
                         endRow: true,
-                        changed: function(form, item, value) {
+                        changed: function(_form, _item, _value) {
                             var link = REISSUE;
-                            if (item.validate()) {
+                            if (_item.validate()) {
                                 link.enable();
                                 link.setValue(link.enabledValue);
                             } else {
@@ -103,7 +114,7 @@ isc.VLayout.create({
                         colSpan: 2,
                         textAlign: 'left',
                         startRow: true,
-                        click: function(form, link) {
+                        click: function(_form, _link) {
                             console.log('未実装です。すみません。');
                         }
                     }, {
@@ -117,7 +128,9 @@ isc.VLayout.create({
                         startRow: false,
                         endRow: false,
                         click: function(_form) {
-                            _form.login();
+                            if (_form.validate()) {
+                                _form.submit();
+                            }
                         }
                     }],
                     groupBorderCSS: '1px solid blue',
@@ -128,6 +141,7 @@ isc.VLayout.create({
                     numCols: 5,
                     showInlineErrors: true,
                     validateOnChange: true,
+                    validateOnExit: true,
                     width: 500,
 
                     //======================================================================

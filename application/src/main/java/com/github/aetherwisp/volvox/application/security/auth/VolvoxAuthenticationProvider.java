@@ -1,11 +1,15 @@
 package com.github.aetherwisp.volvox.application.security.auth;
 
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.apache.logging.log4j.LogManager.getLogger;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -26,13 +30,15 @@ import com.github.aetherwisp.volvox.domain.user.UserRepository;
 public class VolvoxAuthenticationProvider implements AuthenticationProvider {
     //======================================================================
     // Fields
+    private static final Logger logger = getLogger(lookup().lookupClass());
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxAuthenticationProvider(final PasswordEncoder _passwordEncoder, final UserRepository _userRepository) {
+    public VolvoxAuthenticationProvider(final PasswordEncoder _passwordEncoder,
+            final UserRepository _userRepository) {
         this.passwordEncoder = Objects.requireNonNull(_passwordEncoder);
         this.userRepository = Objects.requireNonNull(_userRepository);
     }
@@ -40,44 +46,58 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
     //======================================================================
     // Methods
     @Override
-    public Authentication authenticate(Authentication _authentication) throws AuthenticationException {
-        final String username = Optional.ofNullable((String) _authentication.getName())
-                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("username or password is incorrect."));
-        final String password = (String) _authentication.getCredentials();
+    public Authentication authenticate(Authentication _authentication)
+            throws AuthenticationException {
+        try {
+            final String username = Optional.ofNullable(_authentication.getName())
+                    .orElseThrow(() -> new AuthenticationCredentialsNotFoundException(
+                            "username or password is incorrect."));
+            final String password = Optional.ofNullable((String) _authentication.getCredentials())
+                    .orElseThrow(() -> new AuthenticationCredentialsNotFoundException(
+                            "username or password is incorrect."));
 
-        //======================================================================
-        // 認証
-        final User user = this.userRepository.finder()
-                .filterByName(username)
-                .find()
-                .stream()
-                .findFirst()
-                .orElse(null);
-        if (null == user || !this.passwordEncoder.matches(password, user.getPassword())) {
-            // パスワードが違う
-            throw new BadCredentialsException("Username or password is invalid.");
-        }
-        if (!user.isAccountNonExpired()) {
-            // アカウント期限切れ
-            throw new AccountExpiredException("Account is expired.");
-        }
-        if (!user.isAccountNonLocked()) {
-            // アカウントロック
-            throw new LockedException("Account is locked.");
-        }
-        if (!user.isEnabled()) {
-            // アカウント無効
-            throw new DisabledException("Account is disabled.");
-        }
-        if (!user.isCredentialsNonExpired()) {
-            // パスワード期限切れ
-            throw new CredentialsExpiredException("Credential is expired.");
+            //======================================================================
+            // 認証
+            final User user = this.userRepository.finder()
+                    .filterByName(username)
+                    .find()
+                    .stream()
+                    .findFirst()
+                    .orElse(null);
+            if (null == user || !this.passwordEncoder.matches(password, user.getPassword())) {
+                // ユーザ名またはパスワードが違う
+                throw new BadCredentialsException("Username or password is invalid.");
+            }
+            if (!user.isAccountNonExpired()) {
+                // アカウント期限切れ
+                throw new AccountExpiredException("Account is expired.");
+            }
+            if (!user.isAccountNonLocked()) {
+                // アカウントロック
+                throw new LockedException("Account is locked.");
+            }
+            if (!user.isEnabled()) {
+                // アカウント無効
+                throw new DisabledException("Account is disabled.");
+            }
+            if (!user.isCredentialsNonExpired()) {
+                // パスワード期限切れ
+                throw new CredentialsExpiredException("Credential is expired.");
 
-        }
+            }
 
-        //======================================================================
-        // 権限付与
-        return new UsernamePasswordAuthenticationToken(username, password, user.getAuthorities());
+            //======================================================================
+            // 権限付与
+            return new UsernamePasswordAuthenticationToken(username, password,
+                    user.getAuthorities());
+        } catch (AuthenticationException e) {
+            logger.warn(e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            throw new AuthenticationServiceException(
+                    "Authentication request could not be processed due to a system problem.", e);
+        }
     }
 
     /**

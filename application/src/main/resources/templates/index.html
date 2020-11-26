@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta charset="utf-8">
-        <title>Volvox - INDEX</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <base href="/" />
-	    <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png?v={version}(version=${@volvox.version})}"/>
 
-        <!-- =========== -->
-        <!-- Lib Scripts -->
-        <!-- =========== -->
-        <script th:replace="dependencies::axios"></script>
-        <script th:replace="dependencies::smartclient"></script>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>Volvox - INDEX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_csrfToken" th:content="${_csrf.token}" />
+    <meta name="_csrfParameterName" th:content="${_csrf.parameterName}" />
+    <meta name="_csrfHeaderName" th:content="${_csrf.headerName}" />
+    <link rel="shortcut icon" type="image/png" th:href="@{/favicon.png?v={version}(version=${@volvox.version})}" />
 
-        <!-- =========== -->
-        <!-- App Scripts -->
-        <!-- =========== -->
-    </head>
-    <body>
-        <script th:src="@{/app/index/app.js?v={version}(version=${@volvox.version})}"></script>
-    </body>
+    <!-- =========== -->
+    <!-- Lib Scripts -->
+    <!-- =========== -->
+    <script th:replace="dependencies::axios"></script>
+    <script th:replace="dependencies::smartclient"></script>
+
+    <!-- =========== -->
+    <!-- App Scripts -->
+    <!-- =========== -->
+</head>
+
+<body>
+    <script th:src="@{/app/index/app.js?v={version}(version=${@volvox.version})}"></script>
+</body>
+
 </html>

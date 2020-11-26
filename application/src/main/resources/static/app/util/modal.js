@@ -2,7 +2,7 @@
 
 window.app = window.app || {};
 
-window.app.LoadMask = isc.defineClass('LoadMask', 'Window').addProperties({
+window.app.LoadMask = isc.defineClass('Modal', 'Window').addProperties({
     autoDraw: false,
 
     alwaysShowScrollbars: false,

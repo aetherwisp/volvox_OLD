@@ -4,7 +4,6 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationFailureHandler;
 import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationProvider;
 import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationSuccessHandler;
 import com.github.aetherwisp.volvox.domain.user.UserRepository;
@@ -52,10 +52,10 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
 
         _http.formLogin()
-                .loginPage("/")
+                .loginPage("/index")
                 .loginProcessingUrl("/login")
-                .successHandler(
-                        new VolvoxAuthenticationSuccessHandler("/menu", MediaType.TEXT_HTML_VALUE))
+                .successHandler(new VolvoxAuthenticationSuccessHandler("/menu"))
+                .failureHandler(new VolvoxAuthenticationFailureHandler("/index"))
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll();
