@@ -22,6 +22,6 @@
         <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Grids.js(version=${@smartclient.version})}"></script>
         <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_Forms.js(version=${@smartclient.version})}"></script>
         <script th:src="@{/lib/isomorphic/smartclient/{version}/system/modules/ISC_DataBinding.js(version=${@smartclient.version})}"></script>
-        <script th:src="@{/lib/isomorphic/smartclient/{version}/skins/Graphite/load_skin.js(version=${@smartclient.version})}"></script>
+        <script th:src="@{'/lib/isomorphic/smartclient/{version}/skins/' + ${_skin} + '/load_skin.js'(version=${@smartclient.version})}"></script>
     </div>
 </body>

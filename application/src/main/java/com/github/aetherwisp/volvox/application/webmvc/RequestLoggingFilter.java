@@ -22,38 +22,38 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Profile(DEV)
 public class RequestLoggingFilter implements Filter {
-    private static final Logger LOG = getLogger(lookup().lookupClass());
+    private static final Logger logger = getLogger(lookup().lookupClass());
 
     @Override
-    public void doFilter(ServletRequest _request, ServletResponse _response, FilterChain _chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest _request, ServletResponse _response, FilterChain _chain) throws IOException, ServletException {
 
         try {
             if (_request instanceof HttpServletRequest) {
                 final HttpServletRequest req = (HttpServletRequest) _request;
-                LOG.debug("----------------------------------------------------------------------");
-                LOG.debug("{} {} {}", req.getMethod(), req.getRequestURI(), req.getProtocol());
+                logger.debug("----------------------------------------------------------------------");
+                logger.debug("{} {} {}", req.getMethod(), req.getRequestURI(), req.getProtocol());
 
-                LOG.debug("Headers");
+                logger.debug("Headers");
                 Collections.list(req.getHeaderNames())
-                        .stream()
-                        .filter(name -> !name.equals("cookie"))
-                        .forEach(name -> LOG.debug("  {}: {}", name, req.getHeader(name)));
+                    .stream()
+                    .filter(name -> !name.equals("cookie"))
+                    .forEach(name -> logger.debug("  {}: {}", name, req.getHeader(name)));
 
-                LOG.debug("Cookies");
+                logger.debug("Cookies");
                 Arrays.stream(req.getCookies())
-                        .forEach(cookie -> LOG.debug("  {}={}", cookie.getName(),
-                                cookie.getValue()));
+                    .forEach(cookie -> logger.debug("  {}={}", cookie.getName(), cookie.getValue()));
 
-                LOG.debug("Parameters");
+                logger.debug("Parameters");
                 Collections.list(req.getParameterNames())
-                        .stream()
-                        .forEach(name -> LOG.debug("  {}: {}", name, req.getParameter(name)));
-                LOG.debug("----------------------------------------------------------------------");
+                    .stream()
+                    .forEach(name -> logger.debug("  {}: {}", name, req.getParameter(name)));
+                logger.debug("----------------------------------------------------------------------");
             }
-        } finally {
-            _chain.doFilter(_request, _response);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
         }
+
+        _chain.doFilter(_request, _response);
     }
 
 }

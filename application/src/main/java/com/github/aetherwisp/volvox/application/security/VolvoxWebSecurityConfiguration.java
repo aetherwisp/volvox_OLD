@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationFailureHandler;
 import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationProvider;
 import com.github.aetherwisp.volvox.application.security.auth.VolvoxAuthenticationSuccessHandler;
@@ -22,13 +23,13 @@ import com.github.aetherwisp.volvox.domain.user.UserRepository;
  */
 @Configuration
 @EnableWebSecurity
-public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class VolvoxWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     //======================================================================
     // Fields
     private final UserRepository userRepository;
 
     @Autowired
-    public VolvoxWebSecurityConfigurer(final UserRepository _userRepository) {
+    public VolvoxWebSecurityConfiguration(final UserRepository _userRepository) {
         this.userRepository = Objects.requireNonNull(_userRepository);
     }
 
@@ -37,7 +38,7 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity _web) throws Exception {
         _web.ignoring()
-                .antMatchers("/favicon.png", "/app/**", "/lib/**", "/webjars/**");
+            .antMatchers("/favicon.png", "/app/**", "/lib/**", "/webjars/**");
     }
 
     @Override
@@ -45,20 +46,24 @@ public class VolvoxWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
         // Addresses that allow access even when you are not logged in.
         _http.authorizeRequests()
-                .antMatchers("/", "/index", "/login", "/logout", "/error")
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+            .antMatchers("/", "/index", "/login", "/logout", "/error")
+            .permitAll()
+            .anyRequest()
+            .authenticated();
+
+        // CSRF Configuration
+        _http.csrf()
+            .csrfTokenRepository(new CookieCsrfTokenRepository());
 
 
         _http.formLogin()
-                .loginPage("/index")
-                .loginProcessingUrl("/login")
-                .successHandler(new VolvoxAuthenticationSuccessHandler("/menu"))
-                .failureHandler(new VolvoxAuthenticationFailureHandler("/index"))
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .permitAll();
+            .loginPage("/index")
+            .loginProcessingUrl("/login")
+            .successHandler(new VolvoxAuthenticationSuccessHandler("/menu"))
+            .failureHandler(new VolvoxAuthenticationFailureHandler("/index"))
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .permitAll();
     }
 
     @Override
