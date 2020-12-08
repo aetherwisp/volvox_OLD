@@ -1,12 +1,12 @@
 package com.github.aetherwisp.volvox.application.security.auth;
 
-import static com.github.aetherwisp.volvox.application.MessageKeys.Index.ERROR_ACCOUNT_DISABLED;
-import static com.github.aetherwisp.volvox.application.MessageKeys.Index.ERROR_ACCOUNT_EXPIRED;
-import static com.github.aetherwisp.volvox.application.MessageKeys.Index.ERROR_ACCOUNT_LOCKED;
-import static com.github.aetherwisp.volvox.application.MessageKeys.Index.ERROR_BAD_CREDENTIALS;
-import static com.github.aetherwisp.volvox.application.MessageKeys.Index.ERROR_CREDENTIAL_EXPIRED;
-import static com.github.aetherwisp.volvox.application.MessageKeys.Index.ERROR_FAILED;
-import static com.github.aetherwisp.volvox.application.SessionKeys.Index.ERROR;
+import static com.github.aetherwisp.volvox.application.MessageKeys.Index.Login.ERROR_ACCOUNT_DISABLED;
+import static com.github.aetherwisp.volvox.application.MessageKeys.Index.Login.ERROR_ACCOUNT_EXPIRED;
+import static com.github.aetherwisp.volvox.application.MessageKeys.Index.Login.ERROR_ACCOUNT_LOCKED;
+import static com.github.aetherwisp.volvox.application.MessageKeys.Index.Login.ERROR_BAD_CREDENTIALS;
+import static com.github.aetherwisp.volvox.application.MessageKeys.Index.Login.ERROR_CREDENTIAL_EXPIRED;
+import static com.github.aetherwisp.volvox.application.MessageKeys.Index.Login.ERROR_FAILED;
+import static com.github.aetherwisp.volvox.application.SessionKeys.Index.Login.ERROR;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
@@ -37,8 +37,7 @@ public class VolvoxAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         this(_defaultTargetUrl, MediaType.TEXT_HTML_VALUE);
     }
 
-    public VolvoxAuthenticationFailureHandler(final String _defaultTargetUrl,
-            final String _contentType) {
+    public VolvoxAuthenticationFailureHandler(final String _defaultTargetUrl, final String _contentType) {
         super(_defaultTargetUrl);
         this.contentType = Objects.requireNonNull(_contentType);
     }
@@ -46,8 +45,8 @@ public class VolvoxAuthenticationFailureHandler extends SimpleUrlAuthenticationF
     //======================================================================
     // Methods
     @Override
-    public void onAuthenticationFailure(HttpServletRequest _request, HttpServletResponse _response,
-            AuthenticationException _exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest _request, HttpServletResponse _response, AuthenticationException _exception)
+            throws IOException, ServletException {
         super.onAuthenticationFailure(_request, _response, _exception);
         _response.setContentType(this.contentType);
         _response.setCharacterEncoding(StandardCharsets.UTF_8.displayName());

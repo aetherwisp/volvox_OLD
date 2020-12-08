@@ -1,6 +1,6 @@
 package com.github.aetherwisp.volvox.application.index;
 
-import static com.github.aetherwisp.volvox.application.SessionKeys.Index.ERROR;
+import static com.github.aetherwisp.volvox.application.SessionKeys.Index.Login.ERROR;
 import java.util.Locale;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

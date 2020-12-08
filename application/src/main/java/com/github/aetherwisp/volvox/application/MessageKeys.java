@@ -9,23 +9,31 @@ public interface MessageKeys {
 
         private static final String PREFIX = VolvoxApplicationConfiguration.PREFIX + ".index";
 
-        /** ユーザ名またはパスワードが違う */
-        public static final String ERROR_BAD_CREDENTIALS = PREFIX + ".bad.credentials";
+        public static final class Login {
+            private Login() {
+                throw new UnsupportedOperationException();
+            }
 
-        /** アカウント期限切れ */
-        public static final String ERROR_ACCOUNT_EXPIRED = PREFIX + ".account.expired";
+            private static final String PREFIX = MessageKeys.Index.PREFIX + ".login";
 
-        /** アカウントロック */
-        public static final String ERROR_ACCOUNT_LOCKED = PREFIX + ".account.locked";
+            /** ユーザ名またはパスワードが違う */
+            public static final String ERROR_BAD_CREDENTIALS = PREFIX + ".bad.credentials";
 
-        /** アカウント無効 */
-        public static final String ERROR_ACCOUNT_DISABLED = PREFIX + ".account.disabled";
+            /** アカウント期限切れ */
+            public static final String ERROR_ACCOUNT_EXPIRED = PREFIX + ".account.expired";
 
-        /** パスワード期限切れ */
-        public static final String ERROR_CREDENTIAL_EXPIRED = PREFIX + ".credential.expired";
+            /** アカウントロック */
+            public static final String ERROR_ACCOUNT_LOCKED = PREFIX + ".account.locked";
 
-        /** 予期しない失敗 */
-        public static final String ERROR_FAILED = PREFIX + ".failed";
+            /** アカウント無効 */
+            public static final String ERROR_ACCOUNT_DISABLED = PREFIX + ".account.disabled";
+
+            /** パスワード期限切れ */
+            public static final String ERROR_CREDENTIAL_EXPIRED = PREFIX + ".credential.expired";
+
+            /** 予期しない失敗 */
+            public static final String ERROR_FAILED = PREFIX + ".failed";
+        }
     }
 
 }

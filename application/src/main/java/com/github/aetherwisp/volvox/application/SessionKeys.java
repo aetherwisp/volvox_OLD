@@ -9,6 +9,15 @@ public interface SessionKeys {
 
         private static final String PREFIX = VolvoxApplicationConfiguration.PREFIX + ".index";
 
-        public static final String ERROR = PREFIX + ".error";
+        public static final class Login {
+            private Login() {
+                throw new UnsupportedOperationException();
+            }
+
+            private static final String PREFIX = Index.PREFIX + ".index";
+
+            public static final String ERROR = PREFIX + ".error";
+        }
+
     }
 }
