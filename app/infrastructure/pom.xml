@@ -10,6 +10,7 @@
         <groupId>com.github.aetherwisp</groupId>
         <artifactId>volvox</artifactId>
         <version>0.1.0</version>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
     <artifactId>volvox-infrastructure</artifactId>
 

@@ -22,9 +22,9 @@
     <!-- MODULES SECTION -->
     <!-- =============== -->
     <modules>
-        <module>application</module>
-        <module>domain</module>
-        <module>infrastructure</module>
+        <module>app/application</module>
+        <module>app/domain</module>
+        <module>app/infrastructure</module>
     </modules>
 
 
