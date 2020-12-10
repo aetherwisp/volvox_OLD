@@ -35,6 +35,8 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spotbugs.version>4.1.4</spotbugs.version>
     </properties>
 
 
@@ -43,12 +45,6 @@
     <!-- ============================= -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.github.ulisesbocchio</groupId>
-                <artifactId>jasypt-spring-boot-starter</artifactId>
-                <version>[3.0.0,4.0.0)</version>
-            </dependency>
-
             <!-- ============== -->
             <!-- Apache Commons -->
             <!-- ============== -->
@@ -81,7 +77,49 @@
     </dependencyManagement>
 
     <build>
-        <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory>
+        <!-- <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory> -->
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs.version}</version>
+                    <configuration>
+                        <effort>Max</effort>
+                        <threshold>Low</threshold>
+                        <failOnError>false</failOnError>
+                        <jvmArgs>
+                            -Duser.language=ja
+                            -Duser.country=JP
+                            -Duser.timezone=Asia/Tokyo
+                        </jvmArgs>
+                        <sourceEncoding>UTF-8</sourceEncoding>
+                        <outputEncoding>UTF-8</outputEncoding>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs</artifactId>
+                            <version>${spotbugs.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs-ant</artifactId>
+                            <version>${spotbugs.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <phase>test-compile</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>
