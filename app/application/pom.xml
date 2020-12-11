@@ -261,6 +261,14 @@
                     <timezone>Asia/Tokyo</timezone>
                 </configuration>
             </plugin>
+
+            <!-- ======== -->
+            <!-- SpotBugs -->
+            <!-- ======== -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+            </plugin>
         </plugins>
     </build>
 </project>

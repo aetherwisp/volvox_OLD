@@ -25,6 +25,7 @@
         <module>app/application</module>
         <module>app/domain</module>
         <module>app/infrastructure</module>
+        <module>app</module>
     </modules>
 
 
@@ -37,6 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <spotbugs.version>4.1.4</spotbugs.version>
+        <spotbugs.outputXmlFilename>${project.artifactId}-spotbugsXml.xml</spotbugs.outputXmlFilename>
     </properties>
 
 
@@ -77,7 +79,7 @@
     </dependencyManagement>
 
     <build>
-        <!-- <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory> -->
+        <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory>
 
         <pluginManagement>
             <plugins>
@@ -85,7 +87,7 @@
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${spotbugs.version}</version>
-                    <configuration>
+                    <configuration><!-- https://spotbugs.github.io/spotbugs-maven-plugin/check-mojo.html -->
                         <effort>Max</effort>
                         <threshold>Low</threshold>
                         <failOnError>false</failOnError>
@@ -96,19 +98,8 @@
                         </jvmArgs>
                         <sourceEncoding>UTF-8</sourceEncoding>
                         <outputEncoding>UTF-8</outputEncoding>
+                        <spotbugsXmlOutputDirectory>${project.build.directory}/../../target/spotbugs</spotbugsXmlOutputDirectory>
                     </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.github.spotbugs</groupId>
-                            <artifactId>spotbugs</artifactId>
-                            <version>${spotbugs.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>com.github.spotbugs</groupId>
-                            <artifactId>spotbugs-ant</artifactId>
-                            <version>${spotbugs.version}</version>
-                        </dependency>
-                    </dependencies>
                     <executions>
                         <execution>
                             <phase>test-compile</phase>
