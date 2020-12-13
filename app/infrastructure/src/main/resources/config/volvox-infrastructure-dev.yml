@@ -13,5 +13,5 @@ spring:
       maximum-pool-size: 10
       register-mbeans: false
   flyway:
-    locations: classpath:/db/migration,classpath:/dev/db/migration
+    locations: classpath:/db/migration,classpath:/db/migration/dev
     clean-on-validation-error: true

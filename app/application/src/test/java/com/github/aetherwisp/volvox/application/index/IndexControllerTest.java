@@ -48,8 +48,7 @@ public class IndexControllerTest {
     //======================================================================
     // Constructors
     @Autowired
-    public IndexControllerTest(final MockMvc _mockMvc, final DataSource _dataSource,
-            final PasswordEncoder _passwordEncoder) {
+    public IndexControllerTest(final MockMvc _mockMvc, final DataSource _dataSource, final PasswordEncoder _passwordEncoder) {
         this.mockMvc = Objects.requireNonNull(_mockMvc);
         this.dataSource = Objects.requireNonNull(_dataSource);
         this.passwordEncoder = Objects.requireNonNull(_passwordEncoder);
@@ -66,13 +65,10 @@ public class IndexControllerTest {
             //======================================================================
             // テストデータ登録
             final LocalDateTime sysdate = LocalDateTime.now();
-            final Operation operation = Operations.sequenceOf(CommonOperations.DELETE_ALL_TABLES,
-                    Operations.insertInto("user")
-                            .columns("name", "locked", "expired_at", "created_at", "created_by",
-                                    "updated_at", "updated_by")
-                            .values("テストユーザ", Boolean.FALSE, sysdate.plusDays(1L), sysdate,
-                                    Integer.valueOf(1), sysdate, Integer.valueOf(1))
-                            .build());
+            final Operation operation = Operations.sequenceOf(CommonOperations.DELETE_ALL_TABLES, Operations.insertInto("user")
+                .columns("name", "locked", "expired_at", "created_at", "created_by", "updated_at", "updated_by")
+                .values("テストユーザ", Boolean.FALSE, sysdate.plusDays(1L), sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                .build());
             final DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), operation);
             dbSetup.launch();
         }
@@ -81,9 +77,9 @@ public class IndexControllerTest {
         @DisplayName("ログイン画面へリダイレクト")
         public void redirectIndexPage() throws Exception {
             mockMvc.perform(get("/").contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(status().isMovedPermanently())
-                    .andExpect(redirectedUrl("index"));
+                .andDo(print())
+                .andExpect(status().isMovedPermanently())
+                .andExpect(redirectedUrl("index"));
 
         }
 
@@ -91,11 +87,11 @@ public class IndexControllerTest {
         @DisplayName("初期表示")
         public void showIndexPage() throws Exception {
             mockMvc.perform(get("/index").contentType(MediaType.APPLICATION_JSON))
-                    .andDo(print())
-                    .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
-                    .andExpect(status().isOk())
-                    .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                    .andExpect(view().name("index"));
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+                .andExpect(view().name("index"));
 
         }
     }
@@ -108,53 +104,38 @@ public class IndexControllerTest {
             //======================================================================
             // テストデータ登録
             final LocalDateTime sysdate = LocalDateTime.now();
-            final Operation operation = Operations.sequenceOf(Arrays.asList(
-                    CommonOperations.DELETE_ALL_TABLES, Operations.insertInto("role")
-                            .columns("id", "name", "created_at", "created_by", "updated_at",
-                                    "updated_by")
-                            .values(Integer.valueOf(1), "admin", sysdate, Integer.valueOf(1),
-                                    sysdate, Integer.valueOf(1))
-                            .build(),
+            final Operation operation = Operations.sequenceOf(Arrays.asList(CommonOperations.DELETE_ALL_TABLES,
+                    Operations.insertInto("role")
+                        .columns("id", "name", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), "admin", sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .build(),
                     Operations.insertInto("permission")
-                            .columns("id", "name", "created_at", "created_by", "updated_at",
-                                    "updated_by")
-                            .values(Integer.valueOf(1), "all", sysdate, Integer.valueOf(1), sysdate,
-                                    Integer.valueOf(1))
-                            .values(Integer.valueOf(2), "test", sysdate, Integer.valueOf(1),
-                                    sysdate, Integer.valueOf(1))
-                            .build(),
+                        .columns("id", "name", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), "all", sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .values(Integer.valueOf(2), "test", sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .build(),
                     Operations.insertInto("user")
-                            .columns("id", "name", "locked", "expired_at", "created_at",
-                                    "created_by", "updated_at", "updated_by")
-                            .values(Integer.valueOf(1), "test-user", Boolean.FALSE,
-                                    sysdate.plusDays(1L), sysdate, Integer.valueOf(1), sysdate,
-                                    Integer.valueOf(1))
-                            .build(),
+                        .columns("id", "name", "locked", "expired_at", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), "test-user", Boolean.FALSE, sysdate.plusDays(1L), sysdate, Integer.valueOf(1),
+                                sysdate, Integer.valueOf(1))
+                        .build(),
                     Operations.insertInto("user_password")
-                            .columns("user_id", "password", "expired_at", "created_at",
-                                    "created_by", "updated_at", "updated_by")
-                            .values(Integer.valueOf(1), passwordEncoder.encode("password"),
-                                    sysdate.plusDays(1L), sysdate, Integer.valueOf(1), sysdate,
-                                    Integer.valueOf(1))
-                            .build(),
+                        .columns("user_id", "password", "expired_at", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), passwordEncoder.encode("password"), sysdate.plusDays(1L), sysdate,
+                                Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .build(),
                     Operations.insertInto("user_roles")
-                            .columns("user_id", "role_id", "created_at", "created_by", "updated_at",
-                                    "updated_by")
-                            .values(Integer.valueOf(1), Integer.valueOf(1), sysdate,
-                                    Integer.valueOf(1), sysdate, Integer.valueOf(1))
-                            .build(),
+                        .columns("user_id", "role_id", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), Integer.valueOf(1), sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .build(),
                     Operations.insertInto("role_permissions")
-                            .columns("role_id", "permission_id", "created_at", "created_by",
-                                    "updated_at", "updated_by")
-                            .values(Integer.valueOf(1), Integer.valueOf(1), sysdate,
-                                    Integer.valueOf(1), sysdate, Integer.valueOf(1))
-                            .build(),
+                        .columns("role_id", "permission_id", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), Integer.valueOf(1), sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .build(),
                     Operations.insertInto("user_permissions")
-                            .columns("user_id", "permission_id", "created_at", "created_by",
-                                    "updated_at", "updated_by")
-                            .values(Integer.valueOf(1), Integer.valueOf(2), sysdate,
-                                    Integer.valueOf(1), sysdate, Integer.valueOf(1))
-                            .build()));
+                        .columns("user_id", "permission_id", "created_at", "created_by", "updated_at", "updated_by")
+                        .values(Integer.valueOf(1), Integer.valueOf(2), sysdate, Integer.valueOf(1), sysdate, Integer.valueOf(1))
+                        .build()));
             final DbSetup dbSetup = new DbSetup(new DataSourceDestination(dataSource), operation);
             dbSetup.launch();
         }
@@ -162,16 +143,19 @@ public class IndexControllerTest {
         @Test
         @DisplayName("ログイン成功")
         public void showPage() throws Exception {
+
             mockMvc.perform(MockMvcRequestBuilders.post("/login")
-                    .param("username", "test-user")
-                    .param("password", "password")
-                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                    .with(SecurityMockMvcRequestPostProcessors.csrf()))
-                    .andDo(print())
-                    .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
-                    .andExpect(status().isFound())
-                    .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                    .andExpect(view().name("menu"));
+                .param("username", "test-user")
+                .param("password", "password")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .with(SecurityMockMvcRequestPostProcessors.csrf()))
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
+                .andExpect(status().isFound())
+                .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
+                .andExpect(redirectedUrl("/menu"));
+
+            System.err.println("password: " + passwordEncoder.encode("password"));
 
         }
     }
