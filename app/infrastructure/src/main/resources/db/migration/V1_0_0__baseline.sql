@@ -1,4 +1,26 @@
 -- ----------------------------------------------------------------------
+-- 管理者
+-- ----------------------------------------------------------------------
+CREATE SEQUENCE IF NOT EXISTS "seq_administrator_id";
+CREATE TABLE IF NOT EXISTS "administrator" (
+    "id"          INTEGER       NOT NULL  DEFAULT nextval('seq_administrator_id'),
+    "name"        VARCHAR(255)  NOT NULL,
+    "created_at"  TIMESTAMP     NOT NULL,
+    "created_by"  INTEGER       NOT NULL,
+    "updated_at"  TIMESTAMP     NOT NULL,
+    "updated_by"  INTEGER       NOT NULL,
+    PRIMARY KEY ("id"),
+    CONSTRAINT "uq_user_name" UNIQUE ("name")
+);
+COMMENT ON COLUMN "administrator"."id" IS '【管理者 ID】管理者の識別子';
+COMMENT ON COLUMN "administrator"."name" IS '【管理者名】管理者の名称';
+COMMENT ON COLUMN "administrator"."created_at" IS '【作成日時】レコードを作成した日時';
+COMMENT ON COLUMN "administrator"."created_by" IS '【作成者】レコードを作成した日時';
+COMMENT ON COLUMN "administrator"."updated_at" IS '【更新日時】レコードを更新した日時';
+COMMENT ON COLUMN "administrator"."updated_by" IS '【更新者】レコードを更新したユーザの識別子';
+
+
+-- ----------------------------------------------------------------------
 -- ユーザ
 -- ----------------------------------------------------------------------
 CREATE SEQUENCE IF NOT EXISTS "seq_user_id";
