@@ -37,7 +37,7 @@
                 <executions>
                     <execution>
                         <id>union-bugs</id>
-                        <phase>verify</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -46,10 +46,12 @@
                                 <property name="spotbugs.home" value="${project.basedir}/../dev/maven/plugins/spotbugs/${spotbugs.version}" />
                                 <property name="spotbugs.output" value="${project.build.directory}/../../target/spotbugs" />
 
-                                <taskdef name="computeBugHistory" classname="edu.umd.cs.findbugs.anttask.ComputeBugHistoryTask" classpath="${spotbugs.home}/lib/spotbugs-ant.jar" />
-                                <computeBugHistory home="${spotbugs.home}" output="${spotbugs.output}" debug="true">
-                                    <datafile name="${spotbugs.output}/volvox-*-spotbugsXml.xml" />
-                                </computeBugHistory>
+                                <taskdef name="unionbugs" classname="edu.umd.cs.findbugs.anttask.UnionBugs2" classpath="${spotbugs.home}/lib/spotbugs-ant.jar" />
+                                <unionbugs home="${spotbugs.home}" to="${spotbugs.output}/unionbugsXml.xml" debug="true">
+                                    <fileset dir="${spotbugs.output}">
+                                        <include name="volvox-*-spotbugsXml.xml" />
+                                    </fileset>
+                                </unionbugs>
                             </tasks>
                         </configuration>
                     </execution>
