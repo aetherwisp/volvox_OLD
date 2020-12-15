@@ -79,7 +79,7 @@
     </dependencyManagement>
 
     <build>
-        <directory>R:/develop/eclipse/workspace/volvox/${project.artifactId}/target</directory>
+        <directory>R:/develop/eclipse/workspace/volvox/app/${project.artifactId}/target</directory>
 
         <pluginManagement>
             <plugins>
@@ -98,7 +98,7 @@
                         </jvmArgs>
                         <sourceEncoding>UTF-8</sourceEncoding>
                         <outputEncoding>UTF-8</outputEncoding>
-                        <spotbugsXmlOutputDirectory>${project.build.directory}/../../target/spotbugs</spotbugsXmlOutputDirectory>
+                        <spotbugsXmlOutputDirectory>${project.build.directory}/../../../target/spotbugs</spotbugsXmlOutputDirectory>
                     </configuration>
                     <executions>
                         <execution>
