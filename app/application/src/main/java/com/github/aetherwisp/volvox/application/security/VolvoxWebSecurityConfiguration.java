@@ -59,7 +59,7 @@ public class VolvoxWebSecurityConfiguration extends WebSecurityConfigurerAdapter
         _http.formLogin()
             .loginPage("/index")
             .loginProcessingUrl("/login")
-            .successHandler(new VolvoxAuthenticationSuccessHandler("/menu"))
+            .successHandler(new VolvoxAuthenticationSuccessHandler("/dashboard"))
             .failureHandler(new VolvoxAuthenticationFailureHandler("/index"))
             .usernameParameter("username")
             .passwordParameter("password")

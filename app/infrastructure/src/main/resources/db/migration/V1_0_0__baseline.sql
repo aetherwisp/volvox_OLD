@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "administrator" (
     "updated_at"  TIMESTAMP     NOT NULL,
     "updated_by"  INTEGER       NOT NULL,
     PRIMARY KEY ("id"),
-    CONSTRAINT "uq_user_name" UNIQUE ("name")
+    CONSTRAINT "uq_administrator_name" UNIQUE ("name")
 );
 COMMENT ON COLUMN "administrator"."id" IS '【管理者 ID】管理者の識別子';
 COMMENT ON COLUMN "administrator"."name" IS '【管理者名】管理者の名称';

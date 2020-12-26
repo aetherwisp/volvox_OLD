@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -29,6 +28,39 @@
     <!-- PROFILES SECTION -->
     <!-- ================ -->
     <profiles>
+        <!-- ====================== -->
+        <!-- Compile at development -->
+        <!-- ====================== -->
+        <profile>
+            <id>DEV</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+
+            <properties>
+                <packaging.type>jar</packaging.type>
+            </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>config/application-*.yml</exclude>
+                            <exclude>static/lib/isomorphic/**/*.*</exclude>
+                        </excludes>
+                        <filtering>false</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>config/application-*.yml</include>
+                        </includes>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+
         <!-- ============== -->
         <!-- Executable Jar -->
         <!-- ============== -->
@@ -37,9 +69,28 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+
             <properties>
                 <packaging.type>jar</packaging.type>
             </properties>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/application-*.yml</exclude>
+                        </excludes>
+                        <filtering>false</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>**/application-*.yml</include>
+                        </includes>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
         </profile>
 
         <!-- ============== -->
@@ -50,6 +101,7 @@
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>
+
             <properties>
                 <packaging.type>war</packaging.type>
             </properties>
@@ -60,6 +112,24 @@
                     <scope>provided</scope>
                 </dependency>
             </dependencies>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <excludes>
+                            <exclude>**/application-*.yml</exclude>
+                        </excludes>
+                        <filtering>false</filtering>
+                    </resource>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>
+                            <include>**/application-*.yml</include>
+                        </includes>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+            </build>
         </profile>
     </profiles>
 
@@ -174,6 +244,7 @@
         <!-- ================= -->
         <!-- RESOURCES SECTION -->
         <!-- ================= -->
+<!--
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -190,6 +261,7 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+-->
 
         <!-- ========================= -->
         <!-- PLUGIN MANAGEMENT SECTION -->
