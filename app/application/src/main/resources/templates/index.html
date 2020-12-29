@@ -159,17 +159,20 @@
                                         startRow: false,
                                         endRow: false,
                                         click: function (_form) {
-                                            if (_form.validate()) {
-                                                _form.submit();
-                                            }
+                                            _form.submit();
                                         }
                                     }],
 
                                     //======================================================================
                                     // Methods
-                                    login: function () {
-                                        let form = this;
+                                    submit: function (_callback, _requestProperties) {
+                                        if (this.validate()) {
+                                            this.Super("submit", arguments);
+                                        }
                                     },
+                                    // login: function () {
+                                    //     let form = this;
+                                    // },
 
                                     //======================================================================
                                     // Events
@@ -194,12 +197,12 @@
                                             loginButton.disable();
                                         }
                                     },
-                                    itemKeyPress: function (_item, _keyName) {
-                                        if ('Enter' === _keyName) {
-                                            var form = this;
-                                            form.login();
-                                        }
-                                    },
+                                    // itemKeyPress: function (_item, _keyName) {
+                                    //     if ('Enter' === _keyName) {
+                                    //         var form = this;
+                                    //         form.login();
+                                    //     }
+                                    // },
                                 }),
                                 isc.Label.create({
                                     align: 'left',
