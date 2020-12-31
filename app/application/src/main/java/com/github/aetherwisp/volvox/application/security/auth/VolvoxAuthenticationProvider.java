@@ -37,8 +37,7 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxAuthenticationProvider(final PasswordEncoder _passwordEncoder,
-            final UserRepository _userRepository) {
+    public VolvoxAuthenticationProvider(final PasswordEncoder _passwordEncoder, final UserRepository _userRepository) {
         this.passwordEncoder = Objects.requireNonNull(_passwordEncoder);
         this.userRepository = Objects.requireNonNull(_userRepository);
     }
@@ -46,24 +45,21 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
     //======================================================================
     // Methods
     @Override
-    public Authentication authenticate(Authentication _authentication)
-            throws AuthenticationException {
+    public Authentication authenticate(Authentication _authentication) throws AuthenticationException {
         try {
             final String username = Optional.ofNullable(_authentication.getName())
-                    .orElseThrow(() -> new AuthenticationCredentialsNotFoundException(
-                            "username or password is incorrect."));
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("username or password is incorrect."));
             final String password = Optional.ofNullable((String) _authentication.getCredentials())
-                    .orElseThrow(() -> new AuthenticationCredentialsNotFoundException(
-                            "username or password is incorrect."));
+                .orElseThrow(() -> new AuthenticationCredentialsNotFoundException("username or password is incorrect."));
 
             //======================================================================
             // 認証
             final User user = this.userRepository.finder()
-                    .filterByName(username)
-                    .find()
-                    .stream()
-                    .findFirst()
-                    .orElse(null);
+                .filterByName(username)
+                .find()
+                .stream()
+                .findFirst()
+                .orElse(null);
             if (null == user || !this.passwordEncoder.matches(password, user.getPassword())) {
                 // ユーザ名またはパスワードが違う
                 throw new BadCredentialsException("Username or password is invalid.");
@@ -88,20 +84,20 @@ public class VolvoxAuthenticationProvider implements AuthenticationProvider {
 
             //======================================================================
             // 権限付与
-            return new UsernamePasswordAuthenticationToken(username, password,
-                    user.getAuthorities());
+            return new UsernamePasswordAuthenticationToken(user, password, user.getAuthorities());
         } catch (AuthenticationException e) {
             logger.warn(e.getMessage());
             throw e;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            throw new AuthenticationServiceException(
-                    "Authentication request could not be processed due to a system problem.", e);
+            throw new AuthenticationServiceException("Authentication request could not be processed due to a system problem.", e);
         }
     }
 
     /**
-     * 指定されたトークンを処理すべきか否かを返します。 false を返すとフレームワークは別の認証プロバイダーを探そうとするので、これを利用して複数の認証方法を提供することもできます。
+     * 指定されたトークンを処理すべきか否かを返します。
+     * <p>
+     * false を返すとフレームワークは別の認証プロバイダーを探そうとするので、これを利用して複数の認証方法を提供することもできます。
      */
     @Override
     public boolean supports(Class<?> _authentication) {
