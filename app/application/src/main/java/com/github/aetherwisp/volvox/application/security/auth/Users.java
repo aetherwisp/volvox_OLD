@@ -9,7 +9,6 @@ public final class Users {
         throw new UnsupportedOperationException();
     }
 
-
     //======================================================================
     // Methods
     /**

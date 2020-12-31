@@ -84,7 +84,7 @@
                                         showHintInField: true,
                                         showErrorIcon: true,
                                         showErrorText: false,
-                                        hint: 'ユーザ名',
+                                        hint: /*[[ #{aetherwisp.volvox.presentation.index.form.username.hint} ]]*/'ユーザー名',
                                         endRow: true,
                                         changed: function (_form, _item, _value) {
                                             var link = REISSUE;
@@ -99,7 +99,7 @@
                                         validators: [{
                                             type: 'required',
                                             clientOnly: true,
-                                            errorMessage: 'ユーザ名は必須です。'
+                                            errorMessage: /*[[ #{aetherwisp.volvox.presentation.index.form.username.error} ]]*/'ユーザー名は必須です。'
                                         }]
                                     }, {
                                         type: 'RowSpacerItem',
@@ -118,12 +118,12 @@
                                         showHintInField: true,
                                         showErrorIcon: true,
                                         showErrorText: false,
-                                        hint: 'パスワード',
+                                        hint: /*[[ #{aetherwisp.volvox.presentation.index.form.password.hint} ]]*/'パスワード',
                                         endRow: true,
                                         validators: [{
                                             type: 'required',
                                             clientOnly: true,
-                                            errorMessage: 'パスワードは必須です。'
+                                            errorMessage: /*[[ #{aetherwisp.volvox.presentation.index.form.password.error} ]]*/'パスワードは必須です。'
                                         }]
                                     }, {
                                         type: 'RowSpacerItem',
@@ -151,16 +151,13 @@
                                     }, {
                                         type: 'submit',
                                         name: 'loginButton',
-                                        title: '<span style="font: bold large/120% monospace;">ログイン</span>',
+                                        title: /*[[ '<span style="font: bold large/120% monospace;">' + #{aetherwisp.volvox.presentation.index.form.login.title} + '</span>' ]]*/'<span style="font: bold large/120% monospace;">ログイン</span>',
                                         width: '*',
                                         height: 32,
                                         disabled: true,
                                         colSpan: 3,
                                         startRow: false,
                                         endRow: false,
-                                        click: function (_form) {
-                                            _form.submit();
-                                        }
                                     }],
 
                                     //======================================================================
@@ -170,9 +167,6 @@
                                             this.Super("submit", arguments);
                                         }
                                     },
-                                    // login: function () {
-                                    //     let form = this;
-                                    // },
 
                                     //======================================================================
                                     // Events
@@ -197,12 +191,6 @@
                                             loginButton.disable();
                                         }
                                     },
-                                    // itemKeyPress: function (_item, _keyName) {
-                                    //     if ('Enter' === _keyName) {
-                                    //         var form = this;
-                                    //         form.login();
-                                    //     }
-                                    // },
                                 }),
                                 isc.Label.create({
                                     align: 'left',

@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Profile;
 public class ProductWebMvcConfigurer extends AbstractWebMvcConfigurer {
 
     public ProductWebMvcConfigurer() {
-        super("classpath:templates/", "file:static/");
+        super("classpath:templates/", "classpath:static/");
     }
 }
