@@ -17,21 +17,28 @@
 </head>
 
 <body>
+    <!-- =========== -->
+    <!-- App Scripts -->
+    <!-- =========== -->
+    <script th:src="@{/app/header/header.js?v={version}(version=${@volvox.version})}"></script>
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
         isc.VLayout.create({
             width: '100%',
-            height: '100%',
+            height: '99%',
             layoutMargin: 0,
             defaultLayoutAlign: 'center',
             defaultResizeBars: 'marked',
 
-            showResizeBar: true,
+            showResizeBar: false,
+            canDragResize: false,
+            leaveScrollbarGap: true,
 
             members: [
                 //======================================================================
                 // Header
+/*
                 isc.HLayout.create({
                     autoDraw: false,
                     border: '1px solid blue',
@@ -52,6 +59,9 @@
                             contents: "<i>Header</i> for release"
                         })
                     ]
+                }),
+*/
+                volvox.VolvoxHeader.create({
                 }),
                 //======================================================================
                 // Main contents
