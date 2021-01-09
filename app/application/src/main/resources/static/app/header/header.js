@@ -15,13 +15,18 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
             height: '100%'
         }),
         isc.IconMenuButton.create({
-            align: 'center',
+//            align: 'center',
+            align: 'right',
             autoFit: true,
+            canHover: false,
             height: '100%',
-            title: 'メニュー',
+            icon: null,
+            minWidth: 100,
+            showMenuOnClick: true,
+            showFocusedAsOver: false,
+            title: /*[[ ${T(com.github.aetherwisp.volvox.application.user.Users).currentUser().getUsername()} ]]*/,
             valign: 'center',
             wrap: false,
-            icon: null,
             menu: isc.Menu.create({
                 ID: 'menu',
                 autoDraw: false,

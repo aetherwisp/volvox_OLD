@@ -1,4 +1,4 @@
-package com.github.aetherwisp.volvox.application.security.auth;
+package com.github.aetherwisp.volvox.application.user;
 
 import java.util.Objects;
 import org.springframework.security.core.context.SecurityContextHolder;

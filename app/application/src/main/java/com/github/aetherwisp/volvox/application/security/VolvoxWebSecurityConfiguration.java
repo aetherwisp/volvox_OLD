@@ -38,7 +38,8 @@ public class VolvoxWebSecurityConfiguration extends WebSecurityConfigurerAdapter
     @Override
     public void configure(WebSecurity _web) throws Exception {
         _web.ignoring()
-            .antMatchers("/favicon.png", "/app/**", "/lib/**", "/webjars/**");
+            //            .antMatchers("/favicon.png", "/app/**", "/lib/**", "/webjars/**");
+            .antMatchers("/favicon.png", "/lib/**", "/webjars/**");
     }
 
     @Override
