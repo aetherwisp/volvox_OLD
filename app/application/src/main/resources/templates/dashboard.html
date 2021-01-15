@@ -24,9 +24,14 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
+        var dashboardHeader = volvox.VolvoxHeader.create({
+            ID: 'dashboard-header',
+        });
+
         isc.VLayout.create({
+            alwaysShowScrollbars: false,
             width: '100%',
-            height: '99%',
+            height: '100%',
             layoutMargin: 0,
             defaultLayoutAlign: 'center',
             defaultResizeBars: 'marked',
@@ -38,35 +43,37 @@
             members: [
                 //======================================================================
                 // Header
-/*
-                isc.HLayout.create({
-                    autoDraw: false,
-                    border: '1px solid blue',
-
-                    height: 100,
-                    layoutMargin: 0,
-                    defaultLayoutAlign: 'center',
-                    defaultResizeBars: 'marked',
-                    members: [
-                        isc.Label.create({
-                            height: 30,
-                            padding: 10,
-                            align: "center",
-                            valign: "center",
-                            wrap: false,
-                            // icon: "icons/16/approved.png",
-                            showEdges: true,
-                            contents: "<i>Header</i> for release"
-                        })
-                    ]
-                }),
-*/
-                volvox.VolvoxHeader.create({
-                }),
+                /*
+                                isc.HLayout.create({
+                                    autoDraw: false,
+                                    border: '1px solid blue',
+                
+                                    height: 100,
+                                    layoutMargin: 0,
+                                    defaultLayoutAlign: 'center',
+                                    defaultResizeBars: 'marked',
+                                    members: [
+                                        isc.Label.create({
+                                            height: 30,
+                                            padding: 10,
+                                            align: "center",
+                                            valign: "center",
+                                            wrap: false,
+                                            // icon: "icons/16/approved.png",
+                                            showEdges: true,
+                                            contents: "<i>Header</i> for release"
+                                        })
+                                    ]
+                                }),
+                */
+                dashboardHeader,
+                // volvox.VolvoxHeader.create({
+                //     ID: 'dashboard-header',
+                // }),
                 //======================================================================
                 // Main contents
                 isc.HLayout.create({
-                    autoDraw: true,
+                    autoDraw: false,
                     border: '1px solid red',
 
                     height: '100%',
@@ -77,6 +84,7 @@
                         //======================================================================
                         // Left - Navigation Pane
                         isc.ListGrid.create({
+                            autoDraw: false,
                             ID: "countryList",
                             alternateRecordStyles: true,
                             autoFetchData: true,
@@ -117,6 +125,7 @@
                         //======================================================================
                         // Right - Dashboard Panels
                         isc.VLayout.create({
+                            autoDraw: false,
                             width: '100%',
                             height: '100%',
                             layoutMargin: 0,

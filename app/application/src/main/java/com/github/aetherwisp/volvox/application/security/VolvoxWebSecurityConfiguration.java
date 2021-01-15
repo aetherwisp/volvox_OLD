@@ -38,7 +38,6 @@ public class VolvoxWebSecurityConfiguration extends WebSecurityConfigurerAdapter
     @Override
     public void configure(WebSecurity _web) throws Exception {
         _web.ignoring()
-            //            .antMatchers("/favicon.png", "/app/**", "/lib/**", "/webjars/**");
             .antMatchers("/favicon.png", "/lib/**", "/webjars/**");
     }
 
@@ -65,6 +64,11 @@ public class VolvoxWebSecurityConfiguration extends WebSecurityConfigurerAdapter
             .usernameParameter("username")
             .passwordParameter("password")
             .permitAll();
+
+        _http.logout()
+            .logoutUrl("/logout")
+            .logoutSuccessUrl("/index")
+            .invalidateHttpSession(true);
     }
 
     @Override

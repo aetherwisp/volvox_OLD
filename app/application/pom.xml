@@ -240,28 +240,6 @@
     <!-- BUILD SECTION -->
     <!-- ============= -->
     <build>
-        <!-- ================= -->
-        <!-- RESOURCES SECTION -->
-        <!-- ================= -->
-<!--
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/application-*.yml</exclude>
-                </excludes>
-                <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/application-*.yml</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
--->
-
         <!-- ========================= -->
         <!-- PLUGIN MANAGEMENT SECTION -->
         <!-- ========================= -->

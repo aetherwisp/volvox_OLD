@@ -20,8 +20,8 @@ public class RootController {
     @GetMapping(path = {"/app/**"})
     public ModelAndView javascript(HttpServletRequest _request) {
         return new ModelAndView(_request.getRequestURI()
-                .replace(_request.getContextPath(), "")
-                .replaceFirst("^/", "")
-                .replaceFirst("\\.js$", ""));
+            .replace(_request.getContextPath(), "")
+            .replaceFirst("^/", "")
+            .replaceFirst("\\.js$", ""));
     }
 }

@@ -4,18 +4,38 @@ window.volvox = window.volvox || {};
 
 window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addProperties({
     autoDraw: false,
+    alwaysShowScrollbars: false,
     //border: '1px solid black',
     height: 50,
     layoutMargin: 0,
-    defaultLayoutAlign: 'center',
-    defaultResizeBars: 'marked',
+    leaveScrollbarGap: true,
+    showResizeBar: false,
+    canDragResize: false,
     members: [
+        isc.DynamicForm.create({
+            ID: 'volvox-header-form',
+            name: 'volvox-header-form',
+            action: /*[[ @{/logout} ]]*/'',
+            autoDraw: true,
+            height: '100%',
+            method: 'POST',
+            width: 0,
+            canSubmit: true,
+            hidden: true,
+            visible: false,
+            fields: [
+                { type: 'hidden', name: /*[[ ${_csrf.parameterName} ]]*/'', value: /*[[ ${_csrf.token} ]]*/null }
+            ],
+            click: function () {
+                this.submit();
+            }
+        }),
         isc.LayoutSpacer.create({
             width: '*',
             height: '100%'
         }),
         isc.IconMenuButton.create({
-//            align: 'center',
+            autoDraw: false,
             align: 'right',
             autoFit: true,
             canHover: false,
@@ -24,7 +44,7 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
             minWidth: 100,
             showMenuOnClick: true,
             showFocusedAsOver: false,
-            title: /*[[ ${T(com.github.aetherwisp.volvox.application.user.Users).currentUser().getUsername()} ]]*/,
+            title: /*[[ ${T(com.github.aetherwisp.volvox.application.user.Users).currentUser().getUsername()} ]]*/'',
             valign: 'center',
             wrap: false,
             menu: isc.Menu.create({
@@ -33,33 +53,18 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
                 showShadow: true,
                 shadowDepth: 10,
                 data: [
-                    { title: "New", keyTitle: "Ctrl+N", icon: "icons/16/document_plain_new.png" },
-                    { title: "Open", keyTitle: "Ctrl+O", icon: "icons/16/folder_out.png" },
-                    { isSeparator: true },
-                    { title: "Save", keyTitle: "Ctrl+S", icon: "icons/16/disk_blue.png" },
-                    { title: "Save As", icon: "icons/16/save_as.png" },
                     { isSeparator: true },
                     {
-                        title: "Recent Documents", icon: "icons/16/folder_document.png", submenu: [
-                            { title: "data.xml", checked: true },
-                            { title: "Component Guide.doc" },
-                            { title: "SmartClient.doc", checked: true },
-                            { title: "AJAX.doc" }
-                        ]
-                    },
-                    { isSeparator: true },
-                    {
-                        title: "Export as...", icon: "icons/16/export1.png", submenu: [
-                            { title: "XML" },
-                            { title: "CSV" },
-                            { title: "Plain text" }
-                        ]
-                    },
-                    { isSeparator: true },
-                    { title: "Print", enabled: false, keyTitle: "Ctrl+P", icon: "icons/16/printer3.png" }
+                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.logout} ]]*/'',
+                        click: function (_target, _item, _menu, _colNum) {
+                            let form = isc.ViewLoader.getById('volvox-header-form');
+                            form.submit();
+                        },
+                    }
                 ]
             })
-        })
+        }),
+
     ]
 
 });
