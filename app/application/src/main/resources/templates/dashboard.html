@@ -24,10 +24,6 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
 
-        var dashboardHeader = volvox.VolvoxHeader.create({
-            ID: 'dashboard-header',
-        });
-
         isc.VLayout.create({
             alwaysShowScrollbars: false,
             width: '100%',
@@ -41,35 +37,9 @@
             leaveScrollbarGap: true,
 
             members: [
-                //======================================================================
-                // Header
-                /*
-                                isc.HLayout.create({
-                                    autoDraw: false,
-                                    border: '1px solid blue',
-                
-                                    height: 100,
-                                    layoutMargin: 0,
-                                    defaultLayoutAlign: 'center',
-                                    defaultResizeBars: 'marked',
-                                    members: [
-                                        isc.Label.create({
-                                            height: 30,
-                                            padding: 10,
-                                            align: "center",
-                                            valign: "center",
-                                            wrap: false,
-                                            // icon: "icons/16/approved.png",
-                                            showEdges: true,
-                                            contents: "<i>Header</i> for release"
-                                        })
-                                    ]
-                                }),
-                */
-                dashboardHeader,
-                // volvox.VolvoxHeader.create({
-                //     ID: 'dashboard-header',
-                // }),
+                volvox.VolvoxHeader.create({
+                    ID: 'dashboard-header',
+                }),
                 //======================================================================
                 // Main contents
                 isc.HLayout.create({
@@ -105,21 +75,15 @@
                                 dataFormat: 'json',
                                 dataURL: /*[[ @{/dashboard/menus} ]]*/'/dashboard/menus',
                                 fields: [
+                                    { name: 'spacer', title: '', type: 'text', hidden: false, maxWidth: 30, minWidth: 30, width: 30 },
                                     { name: 'group', title: 'Group', type: 'text', hidden: true },
                                     { name: 'name', title: 'Name', type: 'text', hidden: false },
                                     { name: 'url', title: 'URL', type: 'text', hidden: true },
                                 ],
                             }),
-                            // fields: [
-                            //     { name: 'group', title: 'Group', type: 'text', hidden: true },
-                            //     { name: 'name', title: 'Name', type: 'text', hidden: false },
-                            //     { name: 'url', title: 'URL', type: 'text', hidden: true },
-                            // ],
-                            // data: [
-                            //     { group: 'Sample', name: 'Selenide Sample', url: 'http://en.wikipedia.org/wiki/United_states' },
-                            //     { group: 'System', name: 'JVM Monitor', url: 'http://en.wikipedia.org/wiki/China' },
-                            //     { group: 'System', name: 'Logging', url: 'http://en.wikipedia.org/wiki/Japan' }
-                            // ]
+                            recordClick: function(_viewer, _record, _field, _fieldNum, _value, _rawValue) {
+                                window.open(_record.url);
+                            }
                         }),
 
                         //======================================================================

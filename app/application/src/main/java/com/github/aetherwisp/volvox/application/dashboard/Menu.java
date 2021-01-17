@@ -3,6 +3,9 @@ package com.github.aetherwisp.volvox.application.dashboard;
 public class Menu {
     //======================================================================
     // Fields
+    /** インデント用の余白カラム */
+    private final String spacer = "";
+
     /** メニューグループ名 */
     private final String group;
 
@@ -22,6 +25,10 @@ public class Menu {
 
     //======================================================================
     // Getters
+    public String getSpacer() {
+        return this.spacer;
+    }
+
     public String getGroup() {
         return this.group;
     }

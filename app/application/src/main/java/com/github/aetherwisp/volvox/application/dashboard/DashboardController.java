@@ -41,7 +41,7 @@ public class DashboardController {
 
 
         // FIXME: 暫定コード
-        return Arrays.asList(new Menu("＞ Sample Group", "Sample", "https://www.google.co.jp/"),
+        return Arrays.asList(new Menu("Sample Group", "Sample", "https://www.google.co.jp/"),
                 new Menu("System", "JVM Monitor", "https://www.google.co.jp/"),
                 new Menu("System", "Logging", "https://www.google.co.jp/"));
     }
