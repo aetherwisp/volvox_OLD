@@ -52,16 +52,35 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
                 autoDraw: false,
                 showShadow: true,
                 shadowDepth: 10,
-                data: [
-                    { isSeparator: true },
-                    {
-                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.logout} ]]*/'',
+                data: [{
+                    isSeparator: true
+                }, {
+                    title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings} ]]*/'Settings',
+                    submenu: [{
+                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Language',
                         click: function (_target, _item, _menu, _colNum) {
-                            let form = isc.ViewLoader.getById('volvox-header-form');
-                            form.submit();
-                        },
-                    }
-                ]
+                            isc.say('FIXME: 設定ウィンドウを表示して言語を選択状態にする');
+                        }
+                    }, {
+                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} ]]*/'Timezone',
+                        click: function (_target, _item, _menu, _colNum) {
+                            isc.say('FIXME: 設定ウィンドウを表示してタイムゾーンを選択状態にする');
+                        }
+                    }, {
+                        isSeparator: true
+                    }, {
+                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
+                        click: function (_target, _item, _menu, _colNum) {
+                            isc.say('FIXME: 設定ウィンドウを表示');
+                        }
+                    }]
+                }, {
+                    title: /*[[ #{aetherwisp.volvox.presentation.header.menu.logout} ]]*/'Logout',
+                    click: function (_target, _item, _menu, _colNum) {
+                        let form = isc.ViewLoader.getById('volvox-header-form');
+                        form.submit();
+                    },
+                }]
             })
         }),
 
