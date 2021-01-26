@@ -19,26 +19,33 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
         width: '50%',
         height: '50%',
     }),
-    members: [
-        isc.DynamicForm.create({
-            ID: 'volvox-header-form',
-            action: /*[[ @{/logout} ]]*/'',
-            autoDraw: true,
-            height: 1,
-            method: 'POST',
-            width: 1,
-            canSubmit: true,
-            hidden: true,
-            visible: false,
-            fields: [
-                { type: 'hidden', name: /*[[ ${_csrf.parameterName} ]]*/'', value: /*[[ ${_csrf.token} ]]*/null }
-            ]
-        }),
-        isc.LayoutSpacer.create({
+    logoutForm: isc.DynamicForm.create({
+        ID: 'volvox-header-form',
+        action: /*[[ @{/logout} ]]*/'',
+        autoDraw: true,
+        height: 1,
+        method: 'POST',
+        width: 1,
+        canSubmit: true,
+        hidden: true,
+        visible: false,
+        fields: [
+            { type: 'hidden', name: /*[[ ${_csrf.parameterName} ]]*/'', value: /*[[ ${_csrf.token} ]]*/null }
+        ]
+    }),
+    initWidget: function() {
+        this.Super("initWidget", arguments);
+
+        //======================================================================
+        // ヘッダ左の余白
+        this.addMember(isc.LayoutSpacer.create({
             width: '*',
             height: '100%'
-        }),
-        isc.IconMenuButton.create({
+        }));
+
+        //======================================================================
+        // ヘッダ右のメニューボタン
+        this.addMember(isc.IconMenuButton.create({
             autoDraw: false,
             align: 'right',
             autoFit: true,
@@ -88,8 +95,6 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
                     },
                 }]
             })
-        }),
-
-    ]
-
+        }));
+    },
 });
