@@ -11,24 +11,28 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
     leaveScrollbarGap: true,
     showResizeBar: false,
     canDragResize: false,
+    settingsWindow: isc.ModalWindow.create({
+        ID: 'volvox-settings-window',
+        autoCenter: true,
+        autoDraw: false,
+        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings} ]]*/'Settings',
+        width: '50%',
+        height: '50%',
+    }),
     members: [
         isc.DynamicForm.create({
             ID: 'volvox-header-form',
-            name: 'volvox-header-form',
             action: /*[[ @{/logout} ]]*/'',
             autoDraw: true,
-            height: '100%',
+            height: 1,
             method: 'POST',
-            width: 0,
+            width: 1,
             canSubmit: true,
             hidden: true,
             visible: false,
             fields: [
                 { type: 'hidden', name: /*[[ ${_csrf.parameterName} ]]*/'', value: /*[[ ${_csrf.token} ]]*/null }
-            ],
-            click: function () {
-                this.submit();
-            }
+            ]
         }),
         isc.LayoutSpacer.create({
             width: '*',
@@ -70,8 +74,10 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
                         isSeparator: true
                     }, {
                         title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
+                        // click: 'volvox-settings-window.show();'
                         click: function (_target, _item, _menu, _colNum) {
-                            isc.say('FIXME: 設定ウィンドウを表示');
+                            let window = isc.ViewLoader.getById('volvox-settings-window');
+                            window.show();
                         }
                     }]
                 }, {
