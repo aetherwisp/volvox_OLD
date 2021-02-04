@@ -8,7 +8,7 @@ aetherwisp:
         axios:
           version: 0.21.0
         smartclient:
-          version: v121p_2020-08-11
+          version: ${volvox.smartclient.version}
     application:
       browser-startup: true
 

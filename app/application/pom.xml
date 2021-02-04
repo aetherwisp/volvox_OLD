@@ -178,14 +178,14 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
-                    <exclude>**/application-*.yml</exclude>
+                    <exclude>config/application*.yml</exclude>
                 </excludes>
                 <filtering>false</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
-                    <include>**/application-*.yml</include>
+                    <include>config/application*.yml</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>
