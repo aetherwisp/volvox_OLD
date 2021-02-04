@@ -44,7 +44,7 @@
                         <configuration>
                             <tasks>
                                 <property name="spotbugs.home" value="${project.basedir}/../dev/maven/plugins/spotbugs/${spotbugs.version}" />
-                                <property name="spotbugs.output" value="${project.build.directory}/../../../target/spotbugs" />
+                                <property name="spotbugs.output" value="${project.build.directory}/../spotbugs" />
 
                                 <taskdef name="unionbugs" classname="edu.umd.cs.findbugs.anttask.UnionBugs2" classpath="${spotbugs.home}/lib/spotbugs-ant.jar" />
                                 <unionbugs home="${spotbugs.home}" to="${spotbugs.output}/unionbugsXml.xml" debug="true">

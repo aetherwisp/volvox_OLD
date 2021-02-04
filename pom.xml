@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -37,7 +36,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spotbugs.version>4.1.4</spotbugs.version>
+        <spotbugs.version>4.2.0</spotbugs.version>
         <spotbugs.outputXmlFilename>${project.artifactId}-spotbugsXml.xml</spotbugs.outputXmlFilename>
     </properties>
 
@@ -75,6 +74,14 @@
                 <version>1.8</version>
                 <optional>true</optional>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.spotbugs/spotbugs -->
+            <dependency>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs</artifactId>
+                <version>${spotbugs.version}</version>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -87,6 +94,14 @@
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
                     <version>${spotbugs.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.github.spotbugs</groupId>
+                            <artifactId>spotbugs</artifactId>
+                            <version>4.2.0</version>
+                            <type>pom</type>
+                        </dependency>
+                    </dependencies>
                     <configuration><!-- https://spotbugs.github.io/spotbugs-maven-plugin/check-mojo.html -->
                         <effort>Max</effort>
                         <threshold>Low</threshold>
