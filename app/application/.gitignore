@@ -3,5 +3,4 @@
 /.settings/
 /target/
 /node/
-/target/
-/target/
+target
