@@ -79,7 +79,7 @@
     </dependencyManagement>
 
     <build>
-        <directory>R:/develop/eclipse/workspace/volvox/app/${project.artifactId}/target</directory>
+        <directory>${project.basedir}/target/${project.artifactId}</directory>
 
         <pluginManagement>
             <plugins>
