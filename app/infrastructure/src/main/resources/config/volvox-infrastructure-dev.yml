@@ -4,7 +4,7 @@
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:file:~/.volvox/data/volvox;CIPHER=AES;DATABASE_TO_UPPER=FALSE;FILE_LOCK=SOCKET;IGNORECASE=FALSE
+    url: jdbc:h2:file:R:/develop/eclipse/workspace/volvox/data/volvox;CIPHER=AES;DATABASE_TO_UPPER=FALSE;FILE_LOCK=SOCKET;IGNORECASE=FALSE
     username: volvox-db-user
     password: ${VOLVOX_FILE_PASSWORD} ${VOLVOX_USER_PASSWORD}
     hikari:

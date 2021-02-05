@@ -18,6 +18,45 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
         title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings} ]]*/'Settings',
         width: '50%',
         height: '50%',
+        members: [
+            isc.HLayout.create({
+                autoDraw: false,
+                height: '100%',
+                width: '100%',
+                members: [
+                    isc.TreeGrid.create({
+                        autoDraw: false,
+                        height: '100%',
+                        minWidth: 200,
+                        width: '30%',
+                        showHeader: false,
+                        showNodeIcons: false,
+                        showOpener: true,
+                        data: isc.Tree.create({
+                            modelType: 'children',
+                            nameProperty: 'title',
+                            childrenProperty: 'children',
+                            root: {
+                                children: [{
+                                    title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
+                                    children: [{
+                                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
+                                    }]
+                                }]
+                            }
+                        }),
+                        fields: [
+                            { name: 'title', title: 'Title' },
+                        ]
+                    }),
+                    isc.Canvas.create({
+                        autoDraw: false,
+                        height: '100%',
+                        width: '70%'
+                    })
+                ]
+            })
+        ]
     }),
     logoutForm: isc.DynamicForm.create({
         ID: 'volvox-header-form',
@@ -33,7 +72,7 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
             { type: 'hidden', name: /*[[ ${_csrf.parameterName} ]]*/'', value: /*[[ ${_csrf.token} ]]*/null }
         ]
     }),
-    initWidget: function() {
+    initWidget: function () {
         this.Super("initWidget", arguments);
 
         //======================================================================
@@ -68,14 +107,9 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
                 }, {
                     title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings} ]]*/'Settings',
                     submenu: [{
-                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Language',
+                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
                         click: function (_target, _item, _menu, _colNum) {
                             isc.say('FIXME: 設定ウィンドウを表示して言語を選択状態にする');
-                        }
-                    }, {
-                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} ]]*/'Timezone',
-                        click: function (_target, _item, _menu, _colNum) {
-                            isc.say('FIXME: 設定ウィンドウを表示してタイムゾーンを選択状態にする');
                         }
                     }, {
                         isSeparator: true

@@ -3,6 +3,7 @@ SETLOCAL
 
 SET CURRENT_DIR=%~dp0
 SET RAMDISK_APP_HOME=R:\develop\eclipse\workspace\volvox\app
+MKDIR %RAMDISK_APP_HOME%
 
 REM ----------------------------------------------------------------------
 REM app
