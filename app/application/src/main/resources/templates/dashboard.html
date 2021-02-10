@@ -20,6 +20,7 @@
     <!-- =========== -->
     <!-- App Scripts -->
     <!-- =========== -->
+    <script th:src="@{/app/header/SettingsWindow.js?v={version}(version=${@volvox.version})}"></script>
     <script th:src="@{/app/header/Header.js?v={version}(version=${@volvox.version})}"></script>
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
@@ -82,7 +83,7 @@
                                     { name: 'url', title: 'URL', type: 'text', hidden: true },
                                 ],
                             }),
-                            recordClick: function(_viewer, _record, _field, _fieldNum, _value, _rawValue) {
+                            recordClick: function (_viewer, _record, _field, _fieldNum, _value, _rawValue) {
                                 window.open(_record.url);
                             }
                         }),

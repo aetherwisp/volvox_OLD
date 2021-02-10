@@ -1,5 +1,3 @@
-// language=JavaScript
-
 window.volvox = window.volvox || {};
 
 window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addProperties({
@@ -11,52 +9,8 @@ window.volvox.VolvoxHeader = isc.defineClass('VolvoxHeader', 'HLayout').addPrope
     leaveScrollbarGap: true,
     showResizeBar: false,
     canDragResize: false,
-    settingsWindow: isc.ModalWindow.create({
-        ID: 'volvox-settings-window',
-        autoCenter: true,
-        autoDraw: false,
-        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings} ]]*/'Settings',
-        width: '50%',
-        height: '50%',
-        members: [
-            isc.HLayout.create({
-                autoDraw: false,
-                height: '100%',
-                width: '100%',
-                members: [
-                    isc.TreeGrid.create({
-                        autoDraw: false,
-                        height: '100%',
-                        minWidth: 200,
-                        width: '30%',
-                        showHeader: false,
-                        showNodeIcons: false,
-                        showOpener: true,
-                        data: isc.Tree.create({
-                            modelType: 'children',
-                            nameProperty: 'title',
-                            childrenProperty: 'children',
-                            root: {
-                                children: [{
-                                    title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
-                                    children: [{
-                                        title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
-                                    }]
-                                }]
-                            }
-                        }),
-                        fields: [
-                            { name: 'title', title: 'Title' },
-                        ]
-                    }),
-                    isc.Canvas.create({
-                        autoDraw: false,
-                        height: '100%',
-                        width: '70%'
-                    })
-                ]
-            })
-        ]
+    settingsWindow: volvox.VolvoxSettingsWindow.create({
+        ID: 'volvox-settings-window'
     }),
     logoutForm: isc.DynamicForm.create({
         ID: 'volvox-header-form',

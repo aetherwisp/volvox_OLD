@@ -1,6 +1,6 @@
-package com.github.aetherwisp.volvox.application.dashboard;
+package com.github.aetherwisp.volvox.presentation.header;
 
-public class Menu {
+public class SettingsWindowMenu {
     //======================================================================
     // Fields
     /** インデント用の余白カラム */
@@ -17,7 +17,7 @@ public class Menu {
 
     //======================================================================
     // Constructors
-    public Menu(String _group, String _name, String _url) {
+    public SettingsWindowMenu(String _group, String _name, String _url) {
         this.group = _group;
         this.name = _name;
         this.url = _url;

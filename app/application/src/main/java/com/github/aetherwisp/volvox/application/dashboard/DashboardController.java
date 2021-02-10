@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,22 +26,12 @@ public class DashboardController {
     }
 
     @GetMapping(path = "/menus", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Menu> menus() {
-        final Object principal = SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-        if (principal instanceof UserDetails) {
-            logger.debug("username: {}", ((UserDetails) principal).getUsername());
-        } else {
-            logger.debug("username: {}", principal.toString());
-        }
-
-
+    public List<DashboardMenu> menus() {
 
         // FIXME: 暫定コード
-        return Arrays.asList(new Menu("Sample Group", "Sample", "https://www.google.co.jp/"),
-                new Menu("System", "JVM Monitor", "https://www.google.co.jp/"),
-                new Menu("System", "Logging", "https://www.google.co.jp/"));
+        return Arrays.asList(new DashboardMenu("Sample Group", "Sample", "https://www.google.co.jp/"),
+                new DashboardMenu("System", "JVM Monitor", "https://www.google.co.jp/"),
+                new DashboardMenu("System", "Logging", "https://www.google.co.jp/"));
     }
 
 
