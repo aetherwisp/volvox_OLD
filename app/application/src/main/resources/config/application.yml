@@ -25,7 +25,7 @@ spring:
     favicon:
       enabled: true
   profiles:
-    active: product
+    active: prd
   resources:
     chain:
       compressed: true
