@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.github.aetherwisp.volvox.Volvox;
 
 @Component("volvox")
-public class VolvoxApplicationConfiguration {
+public class ApplicationConfiguration {
     //======================================================================
     // Constants
     public static final String PREFIX = Volvox.CONFIG_ROOT + ".application";
@@ -22,7 +22,7 @@ public class VolvoxApplicationConfiguration {
     //======================================================================
     // Constructors
     @Autowired
-    public VolvoxApplicationConfiguration(@Value("${" + VolvoxApplicationConfiguration.PREFIX + ".version}") final String _version,
+    public ApplicationConfiguration(@Value("${" + ApplicationConfiguration.PREFIX + ".version}") final String _version,
             final ResourceBundleMessageSource _messageSource) {
         this.version = Objects.requireNonNull(_version);
         this.messageSource = Objects.requireNonNull(_messageSource);

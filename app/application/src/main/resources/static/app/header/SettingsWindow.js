@@ -31,18 +31,23 @@ window.volvox.VolvoxSettingsWindow = isc.defineClass('VolvoxSettingsWindow', 'Mo
                         modelType: 'children',
                         nameProperty: 'title',
                         childrenProperty: 'children',
-                        root: {
-                            children: [{
-                                title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
-                                children: [{
-                                    title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
-                                }]
-                            }]
-                        }
+                        root: /*[[ ${root} ]]*/null,
+                        // root: {
+                        //     title: null,
+                        //     children: [{
+                        //         title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
+                        //         children: [{
+                        //             title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
+                        //         }]
+                        //     }]
+                        // }
                     }),
                     fields: [
                         { name: 'title', title: 'Title' },
-                    ]
+                    ],
+                    nodeClick: function(_viewer, _node, _recordNum) {
+                        isc.say(_node.title + ' clicked.');
+                    }
                 }),
                 //======================================================================
                 // 右フォーム

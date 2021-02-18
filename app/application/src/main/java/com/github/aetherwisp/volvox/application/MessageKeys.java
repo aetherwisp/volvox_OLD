@@ -7,7 +7,7 @@ public interface MessageKeys {
             throw new UnsupportedOperationException();
         }
 
-        private static final String PREFIX = VolvoxApplicationConfiguration.PREFIX + ".index";
+        private static final String PREFIX = ApplicationConfiguration.PREFIX + ".index";
 
         public static final class Login {
             private Login() {
