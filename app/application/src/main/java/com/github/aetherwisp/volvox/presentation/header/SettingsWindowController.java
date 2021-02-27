@@ -1,12 +1,17 @@
 package com.github.aetherwisp.volvox.presentation.header;
 
-import static com.github.aetherwisp.volvox.presentation.MessageKeys.Header.Menu.SETTINGS_GENERAL;
-import static com.github.aetherwisp.volvox.presentation.MessageKeys.Header.Menu.SETTINGS_LANGUAGE;
-import static com.github.aetherwisp.volvox.presentation.MessageKeys.Header.Menu.SETTINGS_TIMEZONE;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.apache.logging.log4j.LogManager.getLogger;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.TimeZone;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +29,8 @@ public class SettingsWindowController {
     // Fields
     private static final Logger logger = getLogger(lookup().lookupClass());
 
+    private static final Pattern timezoneIdPattern = Pattern.compile("^[^/]+/[^/]+$");
+
     private final MessageSourceAccessor messageSource;
 
     //======================================================================
@@ -37,15 +44,30 @@ public class SettingsWindowController {
     // Methods
     @GetMapping(path = {"/SettingsWindow.js"})
     public ModelAndView javascript(final HttpServletRequest _request, final Locale _locale) {
-        final Setting timezoneAndLanguage = new Setting(
-                this.messageSource.getMessage(SETTINGS_TIMEZONE) + " / " + this.messageSource.getMessage(SETTINGS_LANGUAGE));
-        final Setting general = new Setting(this.messageSource.getMessage(SETTINGS_GENERAL), timezoneAndLanguage);
-        final Setting root = Setting.root(general);
+        final Map<String, String> timezoneValueMap = Arrays.stream(TimeZone.getAvailableIDs())
+            .filter(ID -> 3 < ID.length())
+            .filter(ID -> !ID.startsWith("Etc") || !ID.startsWith("SystemV") || !ID.startsWith("US"))
+            .filter(ID -> timezoneIdPattern.matcher(ID)
+                .matches())
+            .map(ID -> TimeZone.getTimeZone(ID))
+            .sorted(Comparator.comparing(TimeZone::getRawOffset, Comparator.reverseOrder()))
+            .peek(tz -> logger.debug("({}){}: {}", Integer.valueOf(tz.getRawOffset() / (60 * 60 * 1000)), tz.getID(),
+                    tz.getDisplayName()))
+            .collect(Collectors.toMap(TimeZone::getDisplayName, TimeZone::getID, (v1, v2) -> v2, LinkedHashMap::new))
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, (v1, v2) -> v2, LinkedHashMap::new));
+
+        logger.debug("----------");
+        ZoneId.getAvailableZoneIds()
+            .forEach(id -> logger.debug(ZoneId.of(id)));
+        logger.debug("ゾーン総数：{}", Integer.valueOf(ZoneId.getAvailableZoneIds()
+            .size()));
 
         return new ModelAndView(_request.getRequestURI()
             .replace(_request.getContextPath(), "")
             .replaceFirst("^/", "")
-            .replaceFirst("\\.js$", "")).addObject("root", root);
+            .replaceFirst("\\.js$", "")).addObject("timezoneValueMap", timezoneValueMap);
     }
 
     //    @GetMapping(path = "/menus", produces = MediaType.APPLICATION_JSON_VALUE)

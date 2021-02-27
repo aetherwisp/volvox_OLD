@@ -31,16 +31,15 @@ window.volvox.VolvoxSettingsWindow = isc.defineClass('VolvoxSettingsWindow', 'Mo
                         modelType: 'children',
                         nameProperty: 'title',
                         childrenProperty: 'children',
-                        root: /*[[ ${root} ]]*/null,
-                        // root: {
-                        //     title: null,
-                        //     children: [{
-                        //         title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
-                        //         children: [{
-                        //             title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
-                        //         }]
-                        //     }]
-                        // }
+                        root: {
+                            title: null,
+                            children: [{
+                                title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.general} ]]*/'General',
+                                children: [{
+                                    title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} + ' / ' + #{aetherwisp.volvox.presentation.header.menu.settings.language} ]]*/'Timezone / Language',
+                                }]
+                            }]
+                        }
                     }),
                     fields: [
                         { name: 'title', title: 'Title' },
@@ -52,11 +51,29 @@ window.volvox.VolvoxSettingsWindow = isc.defineClass('VolvoxSettingsWindow', 'Mo
                 //======================================================================
                 // 右フォーム
                 // TODO: TabSet で切り替える（参考：https://www.smartclient.com/smartclient-release/showcase/?id=closeableTabs）
-                isc.Canvas.create({
+                isc.TabSet.create({
                     autoDraw: false,
                     height: '100%',
-                    // minWidth: '50%',
-                    width: '70%'
+                    showTabBar: false,
+                    tabBarPosition: 'top',
+                    tabs: [{
+                        pane: isc.DynamicForm.create({
+                            autoDraw: false,
+                            autoFocus: true,
+                            autoFocusOnError: false,
+                            canSubmit: false,
+                            fields: [{
+                                name: 'timezone',
+                                showTitle: true,
+                                title: /*[[ #{aetherwisp.volvox.presentation.header.menu.settings.timezone} ]]*/'Timezone',
+                                type: 'select',
+                                valueMap: /*[[ ${timezoneValueMap} ]]*/null
+                            }],
+                            height: '100%',
+                            width: '100%'
+                        })
+                    }],
+                    width: '70%',
                 })
             ]
         }));
