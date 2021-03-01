@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile(DEV)
+@Profile({DEV, "test"})
 public class DevelopWebMvcConfigurer extends AbstractWebMvcConfigurer {
 
     public DevelopWebMvcConfigurer() {

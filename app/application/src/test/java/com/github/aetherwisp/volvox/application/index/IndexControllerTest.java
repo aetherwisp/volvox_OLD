@@ -153,7 +153,7 @@ public class IndexControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML_VALUE))
                 .andExpect(status().isFound())
                 .andExpect(content().encoding(StandardCharsets.UTF_8.name()))
-                .andExpect(redirectedUrl("/menu"));
+                .andExpect(redirectedUrl("/dashboard"));
 
             System.err.println("password: " + passwordEncoder.encode("password"));
 

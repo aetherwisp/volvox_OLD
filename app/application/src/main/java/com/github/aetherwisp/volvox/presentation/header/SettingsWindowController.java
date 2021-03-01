@@ -2,14 +2,16 @@ package com.github.aetherwisp.volvox.presentation.header;
 
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.apache.logging.log4j.LogManager.getLogger;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TimeZone;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import com.github.aetherwisp.volvox.presentation.Tree;
 
 @RestController
 @RequestMapping("/app/header")
@@ -42,32 +45,65 @@ public class SettingsWindowController {
 
     //======================================================================
     // Methods
-    @GetMapping(path = {"/SettingsWindow.js"})
+    @GetMapping(path = "/SettingsWindow.js", produces = "application/javascript")
     public ModelAndView javascript(final HttpServletRequest _request, final Locale _locale) {
-        final Map<String, String> timezoneValueMap = Arrays.stream(TimeZone.getAvailableIDs())
+
+        //======================================================================
+        // タイムゾーンのツリーを構成
+        final Map<String, List<TimeZone>> tzMap = new TreeMap<>();
+        Arrays.stream(TimeZone.getAvailableIDs())
             .filter(ID -> 3 < ID.length())
             .filter(ID -> !ID.startsWith("Etc") || !ID.startsWith("SystemV") || !ID.startsWith("US"))
             .filter(ID -> timezoneIdPattern.matcher(ID)
                 .matches())
             .map(ID -> TimeZone.getTimeZone(ID))
             .sorted(Comparator.comparing(TimeZone::getRawOffset, Comparator.reverseOrder()))
+            .forEach(tz -> {
+                final String area = tz.getID()
+                    .substring(0, tz.getID()
+                        .indexOf('/'));
+                if (!tzMap.containsKey(area)) {
+                    tzMap.put(area, new ArrayList<>());
+                }
+                tzMap.get(area)
+                    .add(tz);
+            });
+
+
+        final Tree root = Tree.root(Arrays.stream(TimeZone.getAvailableIDs())
+            .filter(ID -> 3 < ID.length())
+            .filter(ID -> !ID.startsWith("Etc") && !ID.startsWith("SystemV") && !ID.startsWith("US"))
+            .filter(ID -> timezoneIdPattern.matcher(ID)
+                .matches())
+            .map(ID -> TimeZone.getTimeZone(ID))
+            .sorted(Comparator.comparing(TimeZone::getRawOffset, Comparator.reverseOrder()))
             .peek(tz -> logger.debug("({}){}: {}", Integer.valueOf(tz.getRawOffset() / (60 * 60 * 1000)), tz.getID(),
                     tz.getDisplayName()))
-            .collect(Collectors.toMap(TimeZone::getDisplayName, TimeZone::getID, (v1, v2) -> v2, LinkedHashMap::new))
+            .collect(Collectors.toMap((TimeZone tz) -> tz.getID()
+                .substring(0, tz.getID()
+                    .indexOf('/')), (TimeZone tz) -> Arrays.asList(tz), (v1, v2) -> {
+                        final Map<String, TimeZone> merged = new HashMap<>();
+                        for (TimeZone tz : v1) {
+                            merged.put(tz.getDisplayName(), tz);
+                        }
+                        for (TimeZone tz : v2) {
+                            merged.put(tz.getDisplayName(), tz);
+                        }
+                        return new ArrayList<>(merged.values());
+                    }, TreeMap::new))
             .entrySet()
             .stream()
-            .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey, (v1, v2) -> v2, LinkedHashMap::new));
+            .map(entry -> new Tree(entry.getKey(), null, entry.getValue()
+                .stream()
+                .map((TimeZone tz) -> new Tree(tz.getDisplayName(), tz.getID()))
+                .collect(Collectors.toList())))
+            .collect(Collectors.toList()));
 
-        logger.debug("----------");
-        ZoneId.getAvailableZoneIds()
-            .forEach(id -> logger.debug(ZoneId.of(id)));
-        logger.debug("ゾーン総数：{}", Integer.valueOf(ZoneId.getAvailableZoneIds()
-            .size()));
 
         return new ModelAndView(_request.getRequestURI()
             .replace(_request.getContextPath(), "")
             .replaceFirst("^/", "")
-            .replaceFirst("\\.js$", "")).addObject("timezoneValueMap", timezoneValueMap);
+            .replaceFirst("\\.js$", "")).addObject("timezoneTree", root);
     }
 
     //    @GetMapping(path = "/menus", produces = MediaType.APPLICATION_JSON_VALUE)
